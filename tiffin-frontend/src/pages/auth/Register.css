@@ -1,0 +1,130 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+}
+
+.register-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #eef4ff, #dfefff);
+}
+
+.register-card {
+    width: 100%;
+    max-width: 520px;
+    background: white;
+    border-radius: 14px;
+    padding: 35px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+}
+
+.register-card h1 {
+    margin: 0;
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin: 10px 0 30px;
+}
+
+.name-row {
+    display: flex;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+    flex: 1;
+}
+
+.input-group label {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.input-group input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: .3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 6px rgba(37,99,235,.25);
+}
+
+.register-btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.register-btn:hover {
+    background: #1d4ed8;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-link a {
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+
+    .name-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .register-card {
+        padding: 25px;
+    }
+
+}
+
+.error {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.server-error {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.register-btn:disabled {
+    background: #93c5fd;
+    cursor: not-allowed;
+}

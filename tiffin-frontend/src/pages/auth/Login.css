@@ -1,0 +1,130 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+}
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #fbe0b6, #f7c3d1);
+}
+
+.login-card {
+    width: 100%;
+    max-width: 520px;
+    background: white;
+    border-radius: 14px;
+    padding: 35px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+}
+
+.login-card h1 {
+    margin: 0;
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin: 10px 0 30px;
+}
+
+.name-row {
+    display: flex;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+    flex: 1;
+}
+
+.input-group label {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.input-group input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: .3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 6px rgba(37,99,235,.25);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #eb6e25;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.login-btn:hover {
+    background: #df5201;
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register-link a {
+    text-decoration: none;
+    color: #eb6e25;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+
+    .name-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .login-card {
+        padding: 25px;
+    }
+
+}
+
+.error {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.server-error {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-btn:disabled {
+    background: #93c5fd;
+    cursor: not-allowed;
+}
