@@ -18,6 +18,8 @@ import VendorOrders from "../pages/vendor/VendorOrders";
 // ============================================================
 import FeedbackList from "../pages/vendor/FeedbackList";
 import LandingPage from "../pages/LandingPage";
+import Feedback from "../pages/customer/Feedback";
+
 
 function AppRoutes() {
 
@@ -33,7 +35,7 @@ function AppRoutes() {
             />
 
             <Route
-                path="/"
+                path="/login"
                 element={<Login />}
             />
 
