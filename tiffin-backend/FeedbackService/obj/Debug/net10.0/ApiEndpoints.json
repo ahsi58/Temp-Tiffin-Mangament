@@ -34,15 +34,5 @@
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FeedbackService.Controllers.FeedbackController",
-    "Method": "WhoAmI",
-    "RelativePath": "feedback/whoami",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
   }
 ]

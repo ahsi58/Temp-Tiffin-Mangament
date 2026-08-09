@@ -18,25 +18,6 @@ namespace FeedbackService.Controllers
             _feedbackService = feedbackService;
         }
 
-        [Authorize]
-        [HttpGet("whoami")]
-        public IActionResult WhoAmI()
-        {
-            return Ok(new
-            {
-                IsAuthenticated = User.Identity?.IsAuthenticated,
-                Name = User.Identity?.Name,
-
-                IsCustomer = User.IsInRole("CUSTOMER"),
-                IsVendor = User.IsInRole("VENDOR"),
-
-                Claims = User.Claims.Select(c => new
-                {
-                    c.Type,
-                    c.Value
-                })
-            });
-        }
 
         // CUSTOMER - Submit Feedback
         [Authorize(Roles = "CUSTOMER")]
