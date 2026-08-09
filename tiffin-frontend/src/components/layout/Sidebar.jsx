@@ -2,6 +2,7 @@ import {
     Home,
     UtensilsCrossed,
     ShoppingCart,
+    ShoppingBag,
     User,
     Users,
     LogOut
@@ -25,6 +26,13 @@ function Sidebar() {
             path: "/customer/menu",
             icon: UtensilsCrossed
         },
+
+        {
+            label: "Cart",
+            path: "/customer/cart",
+            icon: <ShoppingBag size={20} />
+        },
+
         {
             name: "My Orders",
             path: "/customer/orders",
