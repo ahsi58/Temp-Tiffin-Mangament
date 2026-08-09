@@ -16,34 +16,32 @@ function Sidebar() {
     const navigate = useNavigate();
 
     const customerMenu = [
-        {
-            name: "Dashboard",
-            path: "/customer/dashboard",
-            icon: Home
-        },
-        {
-            name: "Weekly Menu",
-            path: "/customer/menu",
-            icon: UtensilsCrossed
-        },
-
-        {
-            label: "Cart",
-            path: "/customer/cart",
-            icon: <ShoppingBag size={20} />
-        },
-
-        {
-            name: "My Orders",
-            path: "/customer/orders",
-            icon: ShoppingCart
-        },
-        {
-            name: "Profile",
-            path: "/customer/profile",
-            icon: User
-        }
-    ];
+    {
+        name: "Dashboard",
+        path: "/customer/dashboard",
+        icon: Home
+    },
+    {
+        name: "Weekly Menu",
+        path: "/customer/menu",
+        icon: UtensilsCrossed
+    },
+    {
+        name: "Cart",
+        path: "/customer/cart",
+        icon: ShoppingBag
+    },
+    {
+        name: "My Orders",
+        path: "/customer/orders",
+        icon: ShoppingCart
+    },
+    {
+        name: "Profile",
+        path: "/customer/profile",
+        icon: User
+    }
+];
 
     const vendorMenu = [
         {
@@ -74,6 +72,9 @@ function Sidebar() {
     ];
 
     const menu = role === "CUSTOMER" ? customerMenu : vendorMenu;
+    console.log("🔥 MY SIDEBAR IS RUNNING 🔥");
+    console.log("ROLE:", role);
+    console.log("MENU:", menu);
 
     const handleLogout = () => {
         logout();
