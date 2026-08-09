@@ -1,34 +1,23 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-
 import ProtectedRoute from "../components/ProtectedRoute";
-
 import Profile from "../pages/customer/Profile";
 import VendorProfile from "../pages/vendor/VendorProfile";
-
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
-
 import CustomerDashboard from "../pages/customer/CustomerDashboard";
 import VendorDashboard from "../pages/vendor/VendorDashboard";
-
 import WeeklyMenu from "../pages/customer/WeeklyMenu";
 import VendorWeeklyMenu from "../pages/vendor/VendorWeeklyMenu";
-
 // ============================================================
-// Sharwari's work - Order and Cart pages
-// ============================================================
-
 import Cart from "../pages/customer/Cart";
 import Checkout from "../pages/customer/Checkout";
 import Orders from "../pages/customer/Orders";
 import OrderDetails from "../pages/customer/OrderDetails";
 import VendorOrders from "../pages/vendor/VendorOrders";
-
 // ============================================================
-// End of Sharwari's work
-// ============================================================
-
+import FeedbackList from "../pages/vendor/FeedbackList";
+import LandingPage from "../pages/LandingPage";
 
 function AppRoutes() {
 
@@ -37,6 +26,11 @@ function AppRoutes() {
         <Routes>
 
             {/* ==================== Public Routes ==================== */}
+
+            <Route 
+                path="/" 
+                element={<LandingPage />} 
+            />
 
             <Route
                 path="/"
@@ -66,6 +60,15 @@ function AppRoutes() {
                     <ProtectedRoute allowedRole="CUSTOMER">
                         <WeeklyMenu />
                     </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/customer/feedback"
+                element={
+                <ProtectedRoute allowedRole="CUSTOMER">
+                    <Feedback />
+                </ProtectedRoute>
                 }
             />
 
@@ -158,7 +161,14 @@ function AppRoutes() {
                 }
             />
 
-
+            <Route
+                path="/vendor/feedback"
+                element={
+                <ProtectedRoute allowedRole="VENDOR">
+                    <FeedbackList />
+                </ProtectedRoute>
+                }
+            />
             {/* ============================================================
                 Sharwari's work - Vendor Orders
                 ============================================================ */}

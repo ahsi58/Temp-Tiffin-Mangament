@@ -3,8 +3,10 @@ import {
     UtensilsCrossed,
     ShoppingCart,
     ShoppingBag,
+    Star,
     User,
     Users,
+    MessageSquare,
     LogOut
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -37,6 +39,11 @@ function Sidebar() {
         icon: ShoppingCart
     },
     {
+        name: "Feedback",
+        path: "/customer/feedback",
+        icon: Star,
+    },
+    {
         name: "Profile",
         path: "/customer/profile",
         icon: User
@@ -65,6 +72,11 @@ function Sidebar() {
             icon: Users
         },
         {
+            name: "Feedback",
+            path: "/vendor/feedback",
+            icon: MessageSquare
+        },
+        {
             name: "Profile",
             path: "/vendor/profile",
             icon: User
@@ -72,9 +84,6 @@ function Sidebar() {
     ];
 
     const menu = role === "CUSTOMER" ? customerMenu : vendorMenu;
-    console.log("🔥 MY SIDEBAR IS RUNNING 🔥");
-    console.log("ROLE:", role);
-    console.log("MENU:", menu);
 
     const handleLogout = () => {
         logout();
