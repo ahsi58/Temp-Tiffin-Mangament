@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import tokenService from "../../services/tokenService";
 import { useAuth } from "../../context/AuthContext";
+import AuthLayout from "../../components/layout/AuthLayout";
 import { login } from "../../api/authApi";
 import "./Login.css";
 
@@ -104,6 +105,7 @@ function Login() {
     };
 
   return (
+    <AuthLayout>
       <div className="login-container">
 
           <div className="login-card">
@@ -180,6 +182,7 @@ function Login() {
           </div>
 
       </div>
+      </AuthLayout>
   );
 }
 

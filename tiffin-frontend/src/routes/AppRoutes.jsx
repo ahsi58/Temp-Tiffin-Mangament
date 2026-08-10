@@ -9,6 +9,7 @@ import CustomerDashboard from "../pages/customer/CustomerDashboard";
 import VendorDashboard from "../pages/vendor/VendorDashboard";
 import WeeklyMenu from "../pages/customer/WeeklyMenu";
 import VendorWeeklyMenu from "../pages/vendor/VendorWeeklyMenu";
+import VendorCustomers from "../pages/vendor/VendorCustomers";
 // ============================================================
 import Cart from "../pages/customer/Cart";
 import Checkout from "../pages/customer/Checkout";
@@ -180,6 +181,15 @@ function AppRoutes() {
                 element={
                     <ProtectedRoute allowedRole="VENDOR">
                         <VendorOrders />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/vendor/customers"
+                element={
+                    <ProtectedRoute allowedRole="VENDOR">
+                        <VendorCustomers />
                     </ProtectedRoute>
                 }
             />
