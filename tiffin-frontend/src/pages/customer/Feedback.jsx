@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import feedbackService from "../../services/feedbackService";
+import DashboardLayout from "../../components/layout/DashboardLayout";
 import "./Feedback.css";
 
 const Feedback = () => {
@@ -47,6 +48,7 @@ const Feedback = () => {
   };
 
   return (
+    <DashboardLayout>
     <div className="feedback-container">
       <div className="feedback-card">
         <h2>Give Your Feedback</h2>
@@ -81,6 +83,7 @@ const Feedback = () => {
         </form>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

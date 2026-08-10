@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import feedbackService from "../../services/feedbackService";
+import DashboardLayout from "../../components/layout/DashboardLayout";
 import "./FeedbackList.css";
 
 const FeedbackList = () => {
@@ -37,6 +38,7 @@ const FeedbackList = () => {
   }
 
   return (
+    <DashboardLayout>
     <div className="feedback-page">
       <h1>Customer Feedback</h1>
 
@@ -63,6 +65,7 @@ const FeedbackList = () => {
         </div>
       )}
     </div>
+    </DashboardLayout>
   );
 };
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import { registerCustomer } from "../../api/authApi";
 import { register } from "../../api/authApi";
+import AuthLayout from "../../components/layout/AuthLayout";
 import "./Register.css";
 
 function Register() {
@@ -107,6 +108,7 @@ function Register() {
 };
 
     return (
+        <AuthLayout>
       <div className="register-container">
           <div className="register-card">
 
@@ -240,11 +242,12 @@ function Register() {
 
               <p className="login-link">
                   Already have an account?
-                  <Link to="/"> Login</Link>
+                  <Link to="/login"> Login</Link>
               </p>
 
           </div>
       </div>
+      </AuthLayout>
     );
 }
 
