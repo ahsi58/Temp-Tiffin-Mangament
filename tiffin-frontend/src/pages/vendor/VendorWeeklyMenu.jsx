@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react";
+import {
+    CalendarDays,
+    Plus,
+    UtensilsCrossed
+} from "lucide-react";
+
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import VendorMenuCard from "../../components/vendor/VendorMenuCard";
 import AddMenuModal from "../../components/vendor/AddMenuModal";
+
 import {
     getWeeklyMenu,
     deleteMenu,
     toggleAvailability
 } from "../../api/menuApi";
-import DeleteConfirmationModal from "../../components/vendor/DeleteConfirmationModal";
+
+import DeleteConfirmationModal
+    from "../../components/vendor/DeleteConfirmationModal";
+
 
 const DAYS = [
     "MONDAY",
@@ -19,45 +29,84 @@ const DAYS = [
     "SUNDAY"
 ];
 
+
 function VendorWeeklyMenu() {
 
     const [menus, setMenus] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [editingMenu, setEditingMenu] = useState(null);
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [selectedMenuId, setSelectedMenuId] = useState(null);
-    const [deleteLoading, setDeleteLoading] = useState(false);
+
+    const [showModal, setShowModal] =
+        useState(false);
+
+    const [editingMenu, setEditingMenu] =
+        useState(null);
+
+    const [deleteModalOpen, setDeleteModalOpen] =
+        useState(false);
+
+    const [selectedMenuId, setSelectedMenuId] =
+        useState(null);
+
+    const [deleteLoading, setDeleteLoading] =
+        useState(false);
+
+
+    // ============================================================
+    // Load weekly menu
+    // ============================================================
 
     useEffect(() => {
+
         loadMenus();
+
     }, []);
+
 
     const loadMenus = async () => {
 
         try {
 
-            const response = await getWeeklyMenu();
+            const response =
+                await getWeeklyMenu();
+
             setMenus(response);
 
         } catch (error) {
 
-            console.error("Error loading weekly menu", error);
+            console.error(
+                "Error loading weekly menu",
+                error
+            );
 
         }
 
     };
 
+
+    // ============================================================
+    // Edit
+    // ============================================================
+
     const handleEdit = (menu) => {
 
         setEditingMenu(menu);
+
         setShowModal(true);
 
     };
 
+
+    // ============================================================
+    // Delete
+    // ============================================================
+
     const handleDelete = (id) => {
+
         setSelectedMenuId(id);
+
         setDeleteModalOpen(true);
+
     };
+
 
     const confirmDelete = async () => {
 
@@ -87,11 +136,17 @@ function VendorWeeklyMenu() {
 
     };
 
+
+    // ============================================================
+    // Toggle availability
+    // ============================================================
+
     const handleToggle = async (id) => {
 
         try {
 
-            const updatedMenu = await toggleAvailability(id);
+            const updatedMenu =
+                await toggleAvailability(id);
 
             setMenus(prevMenus =>
                 prevMenus.map(menu =>
@@ -105,59 +160,83 @@ function VendorWeeklyMenu() {
 
             console.error(error);
 
-            alert("Unable to update availability.");
+            alert(
+                "Unable to update availability."
+            );
 
         }
 
     };
 
+
     return (
 
         <DashboardLayout>
 
-            {/* Header */}
+            <div className="space-y-7">
 
-            <div className="flex justify-between items-center mb-10">
+                {/* ==================================================
+                    Page Header
+                   ================================================== */}
 
-                <div>
+                <div className="bg-gradient-to-r from-orange-500 to-orange-400 rounded-2xl px-6 py-5 text-white shadow-md">
 
-                    <h1 className="text-4xl font-bold text-gray-900">
-                        Weekly Menu Management
-                    </h1>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
-                    <p className="text-gray-500 mt-2 text-lg">
-                        Manage lunch and dinner menus for the week.
-                    </p>
+                        <div className="flex items-center gap-3">
+
+                            <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center">
+
+                                <CalendarDays size={23} />
+
+                            </div>
+
+                            <div>
+
+                                <p className="text-xs font-semibold tracking-wider text-orange-100 uppercase">
+                                    MENU MANAGEMENT
+                                </p>
+
+                                <h1 className="text-2xl md:text-3xl font-bold">
+                                    Weekly Menu
+                                </h1>
+
+                                <p className="text-sm text-orange-50 mt-1">
+                                    Manage lunch and dinner meals for the week.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            onClick={() => {
+
+                                setEditingMenu(null);
+
+                                setShowModal(true);
+
+                            }}
+                            className="self-start sm:self-auto bg-white text-orange-600 hover:bg-orange-50 px-4 py-2.5 rounded-lg font-semibold text-sm flex items-center gap-2 shadow-sm transition"
+                        >
+
+                            <Plus size={17} />
+
+                            Add New Menu
+
+                        </button>
+
+                    </div>
 
                 </div>
 
-                <button
-                    onClick={() => {
-                        setEditingMenu(null);
-                        setShowModal(true);
-                    }}
-                    className="
-                        bg-gray-900
-                        hover:bg-black
-                        text-white
-                        px-6
-                        py-3
-                        rounded-xl
-                        font-semibold
-                        shadow-sm
-                        transition
-                    "
-                >
-                    Add New Menu
-                </button>
 
-            </div>
+                {/* ==================================================
+                    Weekly Menu
+                   ================================================== */}
 
-            {/* Weekly Menu */}
-
-            {
-
-                DAYS.map((day) => {
+                {DAYS.map((day) => {
 
                     const lunch = menus.find(
                         menu =>
@@ -165,95 +244,121 @@ function VendorWeeklyMenu() {
                             menu.mealType === "LUNCH"
                     );
 
+
                     const dinner = menus.find(
                         menu =>
                             menu.dayOfWeek === day &&
                             menu.mealType === "DINNER"
                     );
 
+
+                    const dayName =
+                        day.charAt(0) +
+                        day.slice(1).toLowerCase();
+
+
                     return (
 
-                        <div
+                        <section
                             key={day}
-                            className="mb-12"
+                            className="space-y-3"
                         >
 
-                            <h2 className="text-3xl font-bold text-gray-800 border-b border-gray-200 pb-3 mb-8">
+                            {/* Day Header */}
 
-                                {day.charAt(0) +
-                                    day.slice(1).toLowerCase()}
+                            <div className="flex items-center gap-3">
 
-                            </h2>
+                                <div className="w-1 h-7 rounded-full bg-orange-500" />
 
-                            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                                <h2 className="text-lg font-bold text-gray-800">
+                                    {dayName}
+                                </h2>
 
-                                {
-
-                                    lunch ? (
-
-                                        <VendorMenuCard
-                                            menu={lunch}
-                                            onEdit={handleEdit}
-                                            onDelete={handleDelete}
-                                            onToggle={handleToggle}
-                                        />
-
-                                    ) : (
-
-                                        <EmptyCard meal="Lunch" />
-
-                                    )
-
-                                }
-
-                                {
-
-                                    dinner ? (
-
-                                        <VendorMenuCard
-                                            menu={dinner}
-                                            onEdit={handleEdit}
-                                            onDelete={handleDelete}
-                                            onToggle={handleToggle}
-                                        />
-
-                                    ) : (
-
-                                        <EmptyCard meal="Dinner" />
-
-                                    )
-
-                                }
+                                <div className="flex-1 h-px bg-gray-200" />
 
                             </div>
 
-                        </div>
+
+                            {/* Meal Cards */}
+
+                            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+
+                                {lunch ? (
+
+                                    <VendorMenuCard
+                                        menu={lunch}
+                                        onEdit={handleEdit}
+                                        onDelete={handleDelete}
+                                        onToggle={handleToggle}
+                                    />
+
+                                ) : (
+
+                                    <EmptyCard meal="Lunch" />
+
+                                )}
+
+
+                                {dinner ? (
+
+                                    <VendorMenuCard
+                                        menu={dinner}
+                                        onEdit={handleEdit}
+                                        onDelete={handleDelete}
+                                        onToggle={handleToggle}
+                                    />
+
+                                ) : (
+
+                                    <EmptyCard meal="Dinner" />
+
+                                )}
+
+                            </div>
+
+                        </section>
 
                     );
 
-                })
+                })}
 
-            }
 
-            <AddMenuModal
-                open={showModal}
-                onClose={() => {
-                    setShowModal(false);
-                    setEditingMenu(null);
-                }}
-                onMenuAdded={loadMenus}
-                editingMenu={editingMenu}
-            />
+                {/* ==================================================
+                    Add / Edit Modal
+                   ================================================== */}
 
-            <DeleteConfirmationModal
-                open={deleteModalOpen}
-                onClose={() => {
-                    setDeleteModalOpen(false);
-                    setSelectedMenuId(null);
-                }}
-                onConfirm={confirmDelete}
-                loading={deleteLoading}
-            />
+                <AddMenuModal
+                    open={showModal}
+                    onClose={() => {
+
+                        setShowModal(false);
+
+                        setEditingMenu(null);
+
+                    }}
+                    onMenuAdded={loadMenus}
+                    editingMenu={editingMenu}
+                />
+
+
+                {/* ==================================================
+                    Delete Confirmation
+                   ================================================== */}
+
+                <DeleteConfirmationModal
+                    open={deleteModalOpen}
+                    onClose={() => {
+
+                        setDeleteModalOpen(false);
+
+                        setSelectedMenuId(null);
+
+                    }}
+                    onConfirm={confirmDelete}
+                    loading={deleteLoading}
+                />
+
+            </div>
 
         </DashboardLayout>
 
@@ -261,36 +366,32 @@ function VendorWeeklyMenu() {
 
 }
 
+
+// ================================================================
+// Empty Menu Card
+// ================================================================
+
 function EmptyCard({ meal }) {
 
     return (
 
-        <div
-            className="
-                bg-white
-                rounded-2xl
-                border-2
-                border-dashed
-                border-gray-300
-                h-[420px]
-                flex
-                flex-col
-                justify-center
-                items-center
-                shadow-sm
-            "
-        >
+        <div className="bg-white rounded-xl border border-dashed border-gray-300 min-h-[210px] flex flex-col justify-center items-center">
 
-            <h3 className="text-2xl font-semibold text-gray-700">
+            <div className="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center">
 
-                {meal}
+                <UtensilsCrossed
+                    size={20}
+                    className="text-gray-300"
+                />
 
+            </div>
+
+            <h3 className="text-sm font-semibold text-gray-600 mt-3">
+                {meal} Menu
             </h3>
 
-            <p className="text-gray-500 mt-3">
-
+            <p className="text-xs text-gray-400 mt-1">
                 No menu has been added yet.
-
             </p>
 
         </div>
@@ -299,4 +400,6 @@ function EmptyCard({ meal }) {
 
 }
 
+
 export default VendorWeeklyMenu;
+

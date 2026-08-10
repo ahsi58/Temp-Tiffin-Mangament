@@ -1,15 +1,17 @@
-
 import { useEffect, useState } from "react";
+
 import {
     ShoppingBag,
     IndianRupee,
     CalendarDays,
     Loader2,
     PackageCheck,
-    ChevronDown
+    ChevronDown,
+    ClipboardList
 } from "lucide-react";
 
 import DashboardLayout from "../../components/layout/DashboardLayout";
+
 import {
     getAllOrders,
     updateOrderStatus
@@ -27,8 +29,9 @@ function VendorOrders() {
     const [loading, setLoading] = useState(true);
     const [updatingOrderId, setUpdatingOrderId] = useState(null);
 
+
     // ============================================================
-    // Sharwari's work - Load all customer orders
+    // Load all customer orders
     // ============================================================
 
     useEffect(() => {
@@ -36,6 +39,7 @@ function VendorOrders() {
         loadOrders();
 
     }, []);
+
 
     const loadOrders = async () => {
 
@@ -45,7 +49,10 @@ function VendorOrders() {
 
             const response = await getAllOrders();
 
-            console.log("Vendor Orders:", response.data);
+            console.log(
+                "Vendor Orders:",
+                response.data
+            );
 
             setOrders(response.data || []);
 
@@ -71,8 +78,9 @@ function VendorOrders() {
 
     };
 
+
     // ============================================================
-    // Sharwari's work - Update order status
+    // Update order status
     // ============================================================
 
     const handleStatusChange = async (
@@ -95,7 +103,6 @@ function VendorOrders() {
                 response.data
             );
 
-            // Update only the changed order locally
             setOrders(previousOrders =>
                 previousOrders.map(order =>
                     order.id === orderId
@@ -128,8 +135,9 @@ function VendorOrders() {
 
     };
 
+
     // ============================================================
-    // Sharwari's work - Status styling
+    // Status styling
     // ============================================================
 
     const getStatusStyle = (status) => {
@@ -137,32 +145,33 @@ function VendorOrders() {
         switch (status) {
 
             case "PLACED":
-                return "bg-blue-100 text-blue-700";
+                return "bg-blue-50 text-blue-700 border-blue-100";
 
             case "CONFIRMED":
-                return "bg-indigo-100 text-indigo-700";
+                return "bg-indigo-50 text-indigo-700 border-indigo-100";
 
             case "PREPARING":
-                return "bg-orange-100 text-orange-700";
+                return "bg-orange-50 text-orange-700 border-orange-100";
 
             case "READY":
-                return "bg-green-100 text-green-700";
+                return "bg-green-50 text-green-700 border-green-100";
 
             case "COMPLETED":
-                return "bg-gray-100 text-gray-700";
+                return "bg-gray-50 text-gray-700 border-gray-200";
 
             case "CANCELLED":
-                return "bg-red-100 text-red-700";
+                return "bg-red-50 text-red-700 border-red-100";
 
             default:
-                return "bg-gray-100 text-gray-700";
+                return "bg-gray-50 text-gray-700 border-gray-200";
 
         }
 
     };
 
+
     // ============================================================
-    // Sharwari's work - Format order date
+    // Format order date
     // ============================================================
 
     const formatDate = (date) => {
@@ -184,8 +193,9 @@ function VendorOrders() {
 
     };
 
+
     // ============================================================
-    // Sharwari's work - Loading
+    // Loading
     // ============================================================
 
     if (loading) {
@@ -194,12 +204,16 @@ function VendorOrders() {
 
             <DashboardLayout>
 
-                <div className="min-h-[500px] flex items-center justify-center">
+                <div className="min-h-[400px] flex flex-col items-center justify-center">
 
                     <Loader2
-                        size={50}
+                        size={32}
                         className="animate-spin text-orange-500"
                     />
+
+                    <p className="text-sm text-gray-500 mt-3">
+                        Loading customer orders...
+                    </p>
 
                 </div>
 
@@ -209,43 +223,56 @@ function VendorOrders() {
 
     }
 
+
     return (
 
         <DashboardLayout>
 
-            <div className="space-y-8">
+            <div className="space-y-6">
 
-                {/* =================================================
-                    Sharwari's work - Page Header
-                    ================================================= */}
+                {/* ==================================================
+                    Page Header
+                   ================================================== */}
 
-                <div className="bg-white rounded-3xl shadow-md p-8">
+                <div className="bg-gradient-to-r from-orange-500 to-orange-400 rounded-2xl px-6 py-5 text-white shadow-md">
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-between gap-4">
 
-                        <div className="bg-orange-100 p-4 rounded-2xl">
+                        <div className="flex items-center gap-3">
 
-                            <ShoppingBag
-                                size={34}
-                                className="text-orange-500"
-                            />
+                            <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center">
+
+                                <ClipboardList size={23} />
+
+                            </div>
+
+                            <div>
+
+                                <p className="text-xs font-semibold tracking-wider text-orange-100 uppercase">
+                                    ORDER MANAGEMENT
+                                </p>
+
+                                <h1 className="text-2xl md:text-3xl font-bold">
+                                    Customer Orders
+                                </h1>
+
+                                <p className="text-sm text-orange-50 mt-1">
+                                    View orders and manage their current status.
+                                </p>
+
+                            </div>
 
                         </div>
 
-                        <div>
 
-                            <h1 className="text-5xl font-extrabold text-gray-900">
+                        <div className="hidden sm:flex items-center gap-2 bg-white/15 px-3 py-2 rounded-lg text-sm font-semibold">
 
-                                Customer Orders
+                            <ShoppingBag size={16} />
 
-                            </h1>
-
-                            <p className="mt-3 text-lg text-gray-600">
-
-                                View customer orders and manage
-                                their current status.
-
-                            </p>
+                            {orders.length}{" "}
+                            {orders.length === 1
+                                ? "Order"
+                                : "Orders"}
 
                         </div>
 
@@ -253,98 +280,104 @@ function VendorOrders() {
 
                 </div>
 
-                {/* =================================================
-                    Sharwari's work - Empty State
-                    ================================================= */}
+
+                {/* ==================================================
+                    Empty State
+                   ================================================== */}
 
                 {orders.length === 0 ? (
 
-                    <div className="bg-white rounded-3xl shadow-md p-12 min-h-[400px] flex flex-col items-center justify-center text-center">
+                    <div className="bg-white rounded-xl border border-gray-200 shadow-sm min-h-[350px] flex flex-col items-center justify-center text-center px-6">
 
-                        <ShoppingBag
-                            size={70}
-                            className="text-gray-300 mb-6"
-                        />
+                        <div className="w-14 h-14 rounded-xl bg-gray-50 flex items-center justify-center">
 
-                        <h2 className="text-3xl font-bold text-gray-800">
+                            <ShoppingBag
+                                size={27}
+                                className="text-gray-300"
+                            />
 
+                        </div>
+
+                        <h2 className="text-xl font-bold text-gray-800 mt-4">
                             No Orders Found
-
                         </h2>
 
-                        <p className="text-gray-500 mt-3">
-
-                            Customer orders will appear here
-                            once they place an order.
-
+                        <p className="text-sm text-gray-500 mt-2">
+                            Customer orders will appear here once
+                            they place an order.
                         </p>
 
                     </div>
 
                 ) : (
 
-                    /* =================================================
-                       Sharwari's work - Order List
-                       ================================================= */
+                    /* ==================================================
+                       Order List
+                       ================================================== */
 
-                    <div className="space-y-6">
+                    <div className="space-y-4">
 
                         {orders.map(order => (
 
                             <div
                                 key={order.id}
-                                className="bg-white rounded-3xl shadow-md hover:shadow-xl transition-all p-7"
+                                className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
                             >
 
-                                {/* Order Header */}
+                                {/* ==================================================
+                                    Order Header
+                                   ================================================== */}
 
-                                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 border-b pb-6">
+                                <div className="px-5 py-4 border-b border-gray-100">
 
-                                    <div>
+                                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
 
-                                        <div className="flex flex-wrap items-center gap-4">
+                                        {/* Left */}
 
-                                            <h2 className="text-2xl font-bold text-gray-900">
+                                        <div className="min-w-0">
 
-                                                Order #{order.id}
+                                            <div className="flex flex-wrap items-center gap-2.5">
 
-                                            </h2>
+                                                <h2 className="text-base font-bold text-gray-900">
+                                                    Order #{order.id}
+                                                </h2>
 
-                                            <span
-                                                className={`px-4 py-2 rounded-full text-sm font-bold ${getStatusStyle(order.status)}`}
-                                            >
+                                                <span
+                                                    className={`px-2.5 py-1 rounded-full border text-[11px] font-bold ${getStatusStyle(order.status)}`}
+                                                >
+                                                    {order.status}
+                                                </span>
 
-                                                {order.status}
+                                            </div>
 
-                                            </span>
+                                            <div className="flex flex-wrap items-center gap-4 mt-2 text-xs text-gray-500">
+
+                                                <div className="flex items-center gap-1.5">
+
+                                                    <CalendarDays size={14} />
+
+                                                    {formatDate(
+                                                        order.orderDate
+                                                    )}
+
+                                                </div>
+
+                                                <span>
+                                                    Customer #{order.customerId}
+                                                </span>
+
+                                            </div>
 
                                         </div>
 
-                                        <div className="flex items-center gap-2 text-gray-500 mt-3">
 
-                                            <CalendarDays size={18}/>
+                                        {/* Status Update */}
 
-                                            <span>
+                                        <div className="flex items-center gap-2">
 
-                                                {formatDate(
-                                                    order.orderDate
-                                                )}
+                                            <label className="text-xs font-semibold text-gray-500">
 
-                                            </span>
-
-                                        </div>
-
-                                    </div>
-
-                                    {/* Status Dropdown */}
-
-                                    <div className="relative">
-
-                                        <div className="flex items-center gap-3">
-
-                                            <label className="font-semibold text-gray-700">
-
-                                                Update Status:
+                                                Status
 
                                             </label>
 
@@ -362,7 +395,7 @@ function VendorOrders() {
                                                             event.target.value
                                                         )
                                                     }
-                                                    className="appearance-none border border-gray-300 rounded-xl px-4 py-3 pr-10 font-semibold text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 disabled:bg-gray-100"
+                                                    className="appearance-none border border-gray-200 rounded-lg px-3 py-2 pr-8 text-xs font-semibold text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-orange-300 disabled:bg-gray-100 disabled:cursor-not-allowed"
                                                 >
 
                                                     <option value="PLACED">
@@ -392,8 +425,8 @@ function VendorOrders() {
                                                 </select>
 
                                                 <ChevronDown
-                                                    size={18}
-                                                    className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500"
+                                                    size={14}
+                                                    className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400"
                                                 />
 
                                             </div>
@@ -401,7 +434,7 @@ function VendorOrders() {
                                             {updatingOrderId === order.id && (
 
                                                 <Loader2
-                                                    size={22}
+                                                    size={17}
                                                     className="animate-spin text-orange-500"
                                                 />
 
@@ -413,76 +446,69 @@ function VendorOrders() {
 
                                 </div>
 
-                                {/* Customer */}
 
-                                <div className="mt-6">
+                                {/* ==================================================
+                                    Order Items
+                                   ================================================== */}
 
-                                    <p className="text-sm text-gray-500">
-                                        Customer ID
-                                    </p>
+                                <div className="px-5 py-4">
 
-                                    <p className="font-semibold text-gray-800 mt-1">
+                                    <div className="flex items-center justify-between mb-3">
 
-                                        {order.customerId}
+                                        <div className="flex items-center gap-2">
 
-                                    </p>
+                                            <PackageCheck
+                                                size={17}
+                                                className="text-orange-500"
+                                            />
 
-                                </div>
+                                            <h3 className="text-sm font-bold text-gray-800">
+                                                Ordered Items
+                                            </h3>
 
-                                {/* Ordered Items */}
+                                        </div>
 
-                                <div className="mt-6">
-
-                                    <div className="flex items-center gap-2 mb-4">
-
-                                        <PackageCheck
-                                            size={21}
-                                            className="text-orange-500"
-                                        />
-
-                                        <h3 className="text-lg font-bold text-gray-900">
-
-                                            Ordered Items
-
-                                        </h3>
+                                        <span className="text-[11px] text-gray-400">
+                                            {order.items?.length || 0} items
+                                        </span>
 
                                     </div>
 
-                                    <div className="space-y-3">
+
+                                    <div className="space-y-2">
 
                                         {order.items?.map(item => (
 
                                             <div
                                                 key={item.menuId}
-                                                className="bg-gray-50 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+                                                className="bg-gray-50 border border-gray-100 rounded-lg px-3.5 py-2.5 flex items-center justify-between gap-4"
                                             >
 
-                                                <div>
+                                                <div className="min-w-0">
 
-                                                    <p className="font-bold text-gray-900">
-
+                                                    <p className="text-sm font-semibold text-gray-800 truncate">
                                                         {item.title}
-
                                                     </p>
 
-                                                    <p className="text-gray-500 text-sm mt-1">
+                                                    <p className="text-[11px] text-gray-500 mt-0.5">
 
                                                         ₹
                                                         {Number(
                                                             item.price || 0
                                                         ).toFixed(2)}
+
                                                         {" × "}
+
                                                         {item.quantity}
 
                                                     </p>
 
                                                 </div>
 
-                                                <div className="flex items-center gap-1 text-orange-500 font-bold">
 
-                                                    <IndianRupee
-                                                        size={18}
-                                                    />
+                                                <div className="flex items-center gap-0.5 text-sm font-bold text-gray-900 shrink-0">
+
+                                                    <IndianRupee size={14} />
 
                                                     {(
                                                         Number(
@@ -501,26 +527,25 @@ function VendorOrders() {
 
                                 </div>
 
-                                {/* Total */}
 
-                                <div className="border-t mt-6 pt-6 flex justify-between items-center">
+                                {/* ==================================================
+                                    Order Total
+                                   ================================================== */}
 
-                                    <span className="text-lg font-semibold text-gray-700">
+                                <div className="px-5 py-3.5 border-t border-gray-100 flex items-center justify-between">
 
+                                    <span className="text-xs font-semibold text-gray-500">
                                         Order Total
-
                                     </span>
 
-                                    <div className="flex items-center gap-1 text-orange-500">
+                                    <div className="flex items-center gap-0.5 text-orange-500">
 
-                                        <IndianRupee size={24}/>
+                                        <IndianRupee size={17} />
 
-                                        <span className="text-3xl font-extrabold">
-
+                                        <span className="text-xl font-bold">
                                             {Number(
                                                 order.totalAmount || 0
                                             ).toFixed(2)}
-
                                         </span>
 
                                     </div>

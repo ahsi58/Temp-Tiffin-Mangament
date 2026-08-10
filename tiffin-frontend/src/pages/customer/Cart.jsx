@@ -7,7 +7,8 @@ import {
     Trash,
     IndianRupee,
     ArrowRight,
-    Loader2
+    Loader2,
+    ReceiptText
 } from "lucide-react";
 
 import toast from "react-hot-toast";
@@ -184,7 +185,7 @@ function Cart() {
     };
 
     // ============================================================
-    // Sharwari's work - Loading state
+    // Loading state
     // ============================================================
 
     if (loading) {
@@ -193,12 +194,16 @@ function Cart() {
 
             <DashboardLayout>
 
-                <div className="min-h-[500px] flex items-center justify-center">
+                <div className="min-h-[450px] flex flex-col items-center justify-center">
 
                     <Loader2
-                        size={50}
+                        size={34}
                         className="animate-spin text-orange-500"
                     />
+
+                    <p className="mt-3 text-sm text-gray-500">
+                        Loading your cart...
+                    </p>
 
                 </div>
 
@@ -211,7 +216,7 @@ function Cart() {
     const items = cart?.items || [];
 
     // ============================================================
-    // Sharwari's work - Empty cart
+    // Empty cart
     // ============================================================
 
     if (items.length === 0) {
@@ -220,40 +225,40 @@ function Cart() {
 
             <DashboardLayout>
 
-                <div className="bg-white rounded-3xl shadow-md p-10 min-h-[500px] flex flex-col items-center justify-center text-center">
+                <div className="max-w-5xl mx-auto">
 
-                    <div className="bg-orange-100 rounded-full p-6 mb-6">
+                    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm min-h-[430px] flex flex-col items-center justify-center text-center px-6">
 
-                        <ShoppingCart
-                            size={70}
-                            className="text-orange-500"
-                        />
+                        <div className="w-20 h-20 rounded-2xl bg-orange-50 flex items-center justify-center mb-5">
+
+                            <ShoppingCart
+                                size={38}
+                                className="text-orange-500"
+                            />
+
+                        </div>
+
+                        <h1 className="text-2xl font-bold text-gray-900">
+                            Your Cart is Empty
+                        </h1>
+
+                        <p className="text-sm text-gray-500 mt-2 max-w-md">
+                            Add some delicious meals from the weekly menu
+                            to place your order.
+                        </p>
+
+                        <button
+                            onClick={() => navigate("/customer/menu")}
+                            className="mt-6 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all shadow-sm"
+                        >
+
+                            Browse Menu
+
+                            <ArrowRight size={17} />
+
+                        </button>
 
                     </div>
-
-                    <h1 className="text-4xl font-extrabold text-gray-900">
-
-                        Your Cart is Empty
-
-                    </h1>
-
-                    <p className="text-gray-600 text-lg mt-4 max-w-lg">
-
-                        Add some delicious meals from the weekly menu
-                        to place your order.
-
-                    </p>
-
-                    <button
-                        onClick={() => navigate("/customer/menu")}
-                        className="mt-8 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-semibold flex items-center gap-2 transition-all"
-                    >
-
-                        Browse Menu
-
-                        <ArrowRight size={20}/>
-
-                    </button>
 
                 </div>
 
@@ -263,286 +268,294 @@ function Cart() {
 
     }
 
+    // ============================================================
+    // Cart
+    // ============================================================
+
+    const totalQuantity = items.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
+
     return (
 
         <DashboardLayout>
 
-            <div className="space-y-8">
+            <div className="max-w-7xl mx-auto space-y-6">
 
-                {/* =====================================================
-                    Sharwari's work - Cart Header
-                    ===================================================== */}
+                {/* Page Header */}
 
-                <div className="bg-white rounded-3xl shadow-md p-8">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                    <div>
 
-                        <div>
+                        <p className="text-xs font-bold tracking-wider text-orange-500 uppercase">
+                            YOUR ORDER
+                        </p>
 
-                            <h1 className="text-5xl font-extrabold text-gray-900">
+                        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mt-1">
+                            Your Cart
+                        </h1>
 
-                                Your Cart
+                        <p className="text-sm text-gray-500 mt-1">
+                            Review your selected meals before checkout.
+                        </p>
 
-                            </h1>
+                    </div>
 
-                            <p className="mt-3 text-lg text-gray-600">
+                    <div className="inline-flex self-start sm:self-auto items-center gap-2 bg-orange-50 border border-orange-100 text-orange-600 px-3 py-2 rounded-lg text-sm font-semibold">
 
-                                Review your selected meals before checkout.
+                        <ShoppingCart size={17} />
 
-                            </p>
-
-                        </div>
-
-                        <div className="flex items-center gap-3 text-orange-500">
-
-                            <ShoppingCart size={32}/>
-
-                            <span className="text-xl font-bold">
-
-                                {items.length} {items.length === 1 ? "Item" : "Items"}
-
-                            </span>
-
-                        </div>
+                        {items.length}{" "}
+                        {items.length === 1 ? "Item" : "Items"}
 
                     </div>
 
                 </div>
 
-                {/* =====================================================
-                    Sharwari's work - Cart Items
-                    ===================================================== */}
 
-                <div className="grid lg:grid-cols-3 gap-8">
+                {/* Cart Layout */}
 
-                    <div className="lg:col-span-2 space-y-5">
+                <div className="grid lg:grid-cols-3 gap-6">
 
-                        {
-                            items.map(item => {
+                    {/* Cart Items */}
 
-                                const itemTotal =
-                                    Number(item.price) * item.quantity;
+                    <div className="lg:col-span-2 space-y-3">
 
-                                const isUpdating =
-                                    updatingItem === item.menuId;
+                        {items.map(item => {
 
-                                return (
+                            const itemTotal =
+                                Number(item.price) * item.quantity;
 
-                                    <div
-                                        key={item.menuId}
-                                        className="bg-white rounded-3xl shadow-md p-6"
-                                    >
+                            const isUpdating =
+                                updatingItem === item.menuId;
 
-                                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                            return (
 
-                                            <div className="flex-1">
+                                <div
+                                    key={item.menuId}
+                                    className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow"
+                                >
 
-                                                <h2 className="text-2xl font-bold text-gray-900">
+                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 
-                                                    {item.title}
+                                        {/* Item Information */}
 
-                                                </h2>
+                                        <div className="min-w-0">
 
-                                                <div className="flex items-center gap-1 mt-3 text-gray-600">
+                                            <h2 className="text-base font-bold text-gray-900 truncate">
+                                                {item.title}
+                                            </h2>
 
-                                                    <IndianRupee size={18}/>
+                                            <div className="flex items-center gap-1 mt-1 text-xs text-gray-500">
 
-                                                    <span>
+                                                <IndianRupee size={13} />
 
-                                                        {item.price} per meal
-
-                                                    </span>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div className="flex items-center justify-between md:justify-end gap-6">
-
-                                                {/* Quantity */}
-
-                                                <div className="flex items-center border border-gray-300 rounded-xl overflow-hidden">
-
-                                                    <button
-                                                        onClick={() =>
-                                                            handleQuantityChange(
-                                                                item.menuId,
-                                                                item.quantity - 1
-                                                            )
-                                                        }
-                                                        disabled={
-                                                            isUpdating ||
-                                                            item.quantity <= 1
-                                                        }
-                                                        className="p-3 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
-                                                    >
-
-                                                        <Minus size={18}/>
-
-                                                    </button>
-
-                                                    <span className="px-5 font-bold text-lg">
-
-                                                        {isUpdating
-                                                            ? "..."
-                                                            : item.quantity
-                                                        }
-
-                                                    </span>
-
-                                                    <button
-                                                        onClick={() =>
-                                                            handleQuantityChange(
-                                                                item.menuId,
-                                                                item.quantity + 1
-                                                            )
-                                                        }
-                                                        disabled={isUpdating}
-                                                        className="p-3 hover:bg-gray-100 disabled:opacity-40"
-                                                    >
-
-                                                        <Plus size={18}/>
-
-                                                    </button>
-
-                                                </div>
-
-                                                {/* Item total */}
-
-                                                <div className="text-right min-w-[100px]">
-
-                                                    <p className="text-sm text-gray-500">
-                                                        Total
-                                                    </p>
-
-                                                    <p className="text-xl font-bold text-gray-900">
-
-                                                        ₹{itemTotal.toFixed(2)}
-
-                                                    </p>
-
-                                                </div>
-
-                                                {/* Remove */}
-
-                                                <button
-                                                    onClick={() =>
-                                                        handleRemoveItem(
-                                                            item.menuId
-                                                        )
-                                                    }
-                                                    disabled={isUpdating}
-                                                    className="p-3 rounded-xl text-red-500 hover:bg-red-50 disabled:opacity-40"
-                                                    title="Remove item"
-                                                >
-
-                                                    <Trash2 size={21}/>
-
-                                                </button>
+                                                <span>
+                                                    {item.price} per meal
+                                                </span>
 
                                             </div>
 
                                         </div>
 
+
+                                        {/* Controls */}
+
+                                        <div className="flex items-center justify-between sm:justify-end gap-4">
+
+                                            {/* Quantity */}
+
+                                            <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+
+                                                <button
+                                                    onClick={() =>
+                                                        handleQuantityChange(
+                                                            item.menuId,
+                                                            item.quantity - 1
+                                                        )
+                                                    }
+                                                    disabled={
+                                                        isUpdating ||
+                                                        item.quantity <= 1
+                                                    }
+                                                    className="w-8 h-8 flex items-center justify-center hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                                                >
+
+                                                    <Minus size={14} />
+
+                                                </button>
+
+                                                <span className="w-9 text-center text-sm font-semibold text-gray-800">
+
+                                                    {isUpdating
+                                                        ? "..."
+                                                        : item.quantity}
+
+                                                </span>
+
+                                                <button
+                                                    onClick={() =>
+                                                        handleQuantityChange(
+                                                            item.menuId,
+                                                            item.quantity + 1
+                                                        )
+                                                    }
+                                                    disabled={isUpdating}
+                                                    className="w-8 h-8 flex items-center justify-center hover:bg-gray-50 disabled:opacity-40 transition"
+                                                >
+
+                                                    <Plus size={14} />
+
+                                                </button>
+
+                                            </div>
+
+
+                                            {/* Item Total */}
+
+                                            <div className="text-right min-w-[75px]">
+
+                                                <p className="text-[11px] text-gray-400">
+                                                    Total
+                                                </p>
+
+                                                <p className="text-base font-bold text-gray-900">
+                                                    ₹{itemTotal.toFixed(2)}
+                                                </p>
+
+                                            </div>
+
+
+                                            {/* Remove */}
+
+                                            <button
+                                                onClick={() =>
+                                                    handleRemoveItem(
+                                                        item.menuId
+                                                    )
+                                                }
+                                                disabled={isUpdating}
+                                                className="w-8 h-8 rounded-lg flex items-center justify-center text-red-500 hover:bg-red-50 disabled:opacity-40 transition"
+                                                title="Remove item"
+                                            >
+
+                                                <Trash2 size={16} />
+
+                                            </button>
+
+                                        </div>
+
                                     </div>
 
-                                );
+                                </div>
 
-                            })
-                        }
+                            );
+
+                        })}
 
                     </div>
 
-                    {/* =====================================================
-                        Sharwari's work - Cart Summary
-                        ===================================================== */}
+
+                    {/* Order Summary */}
 
                     <div className="lg:col-span-1">
 
-                        <div className="bg-white rounded-3xl shadow-md p-7 sticky top-6">
+                        <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 lg:sticky lg:top-20">
 
-                            <h2 className="text-2xl font-bold text-gray-900">
+                            <div className="flex items-center gap-2">
 
-                                Order Summary
+                                <ReceiptText
+                                    size={19}
+                                    className="text-orange-500"
+                                />
 
-                            </h2>
+                                <h2 className="text-lg font-bold text-gray-900">
+                                    Order Summary
+                                </h2>
 
-                            <div className="border-t mt-6 pt-6 space-y-4">
+                            </div>
 
-                                <div className="flex justify-between text-gray-600">
+
+                            <div className="border-t border-gray-100 mt-4 pt-4 space-y-3">
+
+                                <div className="flex justify-between text-sm text-gray-500">
 
                                     <span>
                                         Items
                                     </span>
 
-                                    <span>
+                                    <span className="font-medium text-gray-800">
                                         {items.length}
                                     </span>
 
                                 </div>
 
-                                <div className="flex justify-between text-gray-600">
+
+                                <div className="flex justify-between text-sm text-gray-500">
 
                                     <span>
                                         Total Quantity
                                     </span>
 
-                                    <span>
-
-                                        {
-                                            items.reduce(
-                                                (total, item) =>
-                                                    total + item.quantity,
-                                                0
-                                            )
-                                        }
-
+                                    <span className="font-medium text-gray-800">
+                                        {totalQuantity}
                                     </span>
 
                                 </div>
 
-                                <div className="border-t pt-5 flex justify-between items-center">
 
-                                    <span className="text-xl font-bold text-gray-900">
+                                <div className="border-t border-gray-100 pt-4 flex justify-between items-center">
+
+                                    <span className="text-base font-bold text-gray-900">
                                         Total
                                     </span>
 
-                                    <span className="text-3xl font-extrabold text-orange-500">
+                                    <div className="flex items-center text-xl font-bold text-orange-500">
 
-                                        ₹{Number(cart.totalAmount || 0).toFixed(2)}
+                                        <IndianRupee size={18} />
 
-                                    </span>
+                                        {Number(
+                                            cart.totalAmount || 0
+                                        ).toFixed(2)}
+
+                                    </div>
 
                                 </div>
 
                             </div>
 
+
+                            {/* Checkout */}
+
                             <button
                                 onClick={() =>
                                     navigate("/customer/checkout")
                                 }
-                                className="w-full mt-7 bg-orange-500 hover:bg-orange-600 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all"
+                                className="w-full mt-5 bg-orange-500 hover:bg-orange-600 text-white py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md"
                             >
 
                                 Proceed to Checkout
 
-                                <ArrowRight size={20}/>
+                                <ArrowRight size={17} />
 
                             </button>
+
+
+                            {/* Clear Cart */}
 
                             <button
                                 onClick={handleClearCart}
                                 disabled={clearingCart}
-                                className="w-full mt-3 border border-red-300 text-red-500 hover:bg-red-50 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+                                className="w-full mt-2.5 border border-red-200 text-red-500 hover:bg-red-50 py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-50"
                             >
 
-                                {
-                                    clearingCart
-                                        ? "Clearing..."
-                                        : "Clear Cart"
-                                }
+                                <Trash size={16} />
 
-                                <Trash size={18}/>
+                                {clearingCart
+                                    ? "Clearing..."
+                                    : "Clear Cart"}
 
                             </button>
 
@@ -557,12 +570,6 @@ function Cart() {
         </DashboardLayout>
 
     );
-
 }
 
 export default Cart;
-
-// ============================================================
-// End of Sharwari's work
-// ============================================================
-

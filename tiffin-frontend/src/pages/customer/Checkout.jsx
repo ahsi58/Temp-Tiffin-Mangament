@@ -5,7 +5,9 @@ import {
     ShoppingCart,
     Loader2,
     CheckCircle2,
-    ArrowLeft
+    ArrowLeft,
+    ShieldCheck,
+    ReceiptText
 } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
@@ -310,7 +312,7 @@ function Checkout() {
     };
 
     // ============================================================
-    // Sharwari's work - Loading UI
+    // Loading UI
     // ============================================================
 
     if (loading) {
@@ -319,12 +321,16 @@ function Checkout() {
 
             <DashboardLayout>
 
-                <div className="min-h-[500px] flex items-center justify-center">
+                <div className="min-h-[450px] flex flex-col items-center justify-center">
 
                     <Loader2
-                        size={50}
+                        size={34}
                         className="animate-spin text-orange-500"
                     />
+
+                    <p className="mt-3 text-sm text-gray-500">
+                        Preparing your checkout...
+                    </p>
 
                 </div>
 
@@ -340,113 +346,139 @@ function Checkout() {
 
     }
 
-    // ============================================================
-    // Sharwari's work - Checkout UI
-    // ============================================================
+    const totalQuantity = cart.items.reduce(
+        (total, item) =>
+            total + item.quantity,
+        0
+    );
 
     return (
 
         <DashboardLayout>
 
-            <div className="max-w-6xl mx-auto space-y-8">
+            <div className="max-w-6xl mx-auto space-y-6">
 
                 {/* Header */}
 
-                <div className="bg-white rounded-3xl shadow-md p-8">
+                <section className="bg-gradient-to-r from-orange-500 to-orange-400 rounded-2xl px-7 py-6 text-white shadow-md">
 
                     <button
                         onClick={() =>
                             navigate("/customer/cart")
                         }
-                        className="flex items-center gap-2 text-gray-600 hover:text-orange-500 font-semibold mb-5"
+                        className="flex items-center gap-2 text-orange-50 hover:text-white text-sm font-medium mb-4 transition"
                     >
 
-                        <ArrowLeft size={20}/>
+                        <ArrowLeft size={17} />
 
                         Back to Cart
 
                     </button>
 
-                    <h1 className="text-5xl font-extrabold text-gray-900">
+                    <div className="flex items-center gap-3">
 
-                        Checkout
+                        <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center">
 
-                    </h1>
+                            <CreditCard size={23} />
 
-                    <p className="mt-3 text-lg text-gray-600">
+                        </div>
 
-                        Review your order and complete your payment.
+                        <div>
 
+                            <p className="text-xs font-semibold tracking-wider text-orange-100 uppercase">
+                                FINAL STEP
+                            </p>
+
+                            <h1 className="text-2xl md:text-3xl font-bold">
+                                Checkout
+                            </h1>
+
+                        </div>
+
+                    </div>
+
+                    <p className="mt-3 text-sm text-orange-50">
+                        Review your meals and complete your secure payment.
                     </p>
 
-                </div>
+                </section>
 
-                <div className="grid lg:grid-cols-3 gap-8">
 
-                    {/* =================================================
-                        Order Items
-                        ================================================= */}
+                {/* Checkout Content */}
+
+                <div className="grid lg:grid-cols-3 gap-6">
+
+                    {/* Order Items */}
 
                     <div className="lg:col-span-2">
 
-                        <div className="bg-white rounded-3xl shadow-md p-8">
+                        <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
 
-                            <div className="flex items-center gap-3 mb-7">
+                            <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
 
-                                <ShoppingCart
-                                    size={28}
-                                    className="text-orange-500"
-                                />
+                                <div className="flex items-center gap-2">
 
-                                <h2 className="text-2xl font-bold text-gray-900">
+                                    <ShoppingCart
+                                        size={19}
+                                        className="text-orange-500"
+                                    />
 
-                                    Order Items
+                                    <h2 className="text-lg font-bold text-gray-900">
+                                        Order Items
+                                    </h2>
 
-                                </h2>
+                                </div>
+
+                                <span className="text-xs font-medium text-gray-500">
+                                    {totalQuantity}{" "}
+                                    {totalQuantity === 1
+                                        ? "meal"
+                                        : "meals"}
+                                </span>
 
                             </div>
 
-                            <div className="space-y-5">
 
-                                {
-                                    cart.items.map(item => (
+                            <div className="p-4 space-y-3">
+
+                                {cart.items.map(item => {
+
+                                    const itemTotal =
+                                        Number(item.price) *
+                                        item.quantity;
+
+                                    return (
 
                                         <div
                                             key={item.menuId}
-                                            className="border border-gray-200 rounded-2xl p-5"
+                                            className="border border-gray-200 rounded-lg px-4 py-3.5"
                                         >
 
-                                            <div className="flex justify-between items-center gap-5">
+                                            <div className="flex items-center justify-between gap-4">
 
-                                                <div>
+                                                <div className="min-w-0">
 
-                                                    <h3 className="text-xl font-bold text-gray-900">
-
+                                                    <h3 className="text-sm font-bold text-gray-900 truncate">
                                                         {item.title}
-
                                                     </h3>
 
-                                                    <p className="text-gray-500 mt-2">
+                                                    <p className="text-xs text-gray-500 mt-1">
 
-                                                        ₹{item.price} × {item.quantity}
+                                                        ₹{item.price}
+                                                        {" "}×{" "}
+                                                        {item.quantity}
 
                                                     </p>
 
                                                 </div>
 
-                                                <div className="text-right">
+                                                <div className="flex items-center gap-1 text-sm font-bold text-gray-900 shrink-0">
 
-                                                    <p className="text-xl font-bold text-gray-900">
+                                                    <IndianRupee
+                                                        size={14}
+                                                    />
 
-                                                        ₹
-                                                        {
-                                                            (
-                                                                Number(item.price) *
-                                                                item.quantity
-                                                            ).toFixed(2)
-                                                        }
-
-                                                    </p>
+                                                    {itemTotal.toFixed(2)}
 
                                                 </div>
 
@@ -454,8 +486,9 @@ function Checkout() {
 
                                         </div>
 
-                                    ))
-                                }
+                                    );
+
+                                })}
 
                             </div>
 
@@ -463,70 +496,67 @@ function Checkout() {
 
                     </div>
 
-                    {/* =================================================
-                        Payment Summary
-                        ================================================= */}
+
+                    {/* Payment Summary */}
 
                     <div>
 
-                        <div className="bg-white rounded-3xl shadow-md p-7 sticky top-6">
+                        <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 lg:sticky lg:top-20">
 
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2">
 
-                                <CreditCard
-                                    size={27}
+                                <ReceiptText
+                                    size={19}
                                     className="text-orange-500"
                                 />
 
-                                <h2 className="text-2xl font-bold text-gray-900">
-
-                                    Payment
-
+                                <h2 className="text-lg font-bold text-gray-900">
+                                    Payment Summary
                                 </h2>
 
                             </div>
 
-                            <div className="border-t mt-6 pt-6">
 
-                                <div className="flex justify-between text-gray-600">
+                            <div className="border-t border-gray-100 mt-4 pt-4 space-y-3">
+
+                                <div className="flex justify-between text-sm text-gray-500">
 
                                     <span>
                                         Total Items
                                     </span>
 
-                                    <span>
-
-                                        {
-                                            cart.items.reduce(
-                                                (total, item) =>
-                                                    total + item.quantity,
-                                                0
-                                            )
-                                        }
-
+                                    <span className="font-medium text-gray-800">
+                                        {cart.items.length}
                                     </span>
 
                                 </div>
 
-                                <div className="border-t mt-5 pt-5 flex justify-between items-center">
+                                <div className="flex justify-between text-sm text-gray-500">
 
-                                    <span className="text-xl font-bold">
-
-                                        Total
-
+                                    <span>
+                                        Total Quantity
                                     </span>
 
-                                    <div className="flex items-center text-orange-500">
+                                    <span className="font-medium text-gray-800">
+                                        {totalQuantity}
+                                    </span>
 
-                                        <IndianRupee size={24}/>
+                                </div>
 
-                                        <span className="text-3xl font-extrabold">
 
-                                            {Number(
-                                                cart.totalAmount || 0
-                                            ).toFixed(2)}
+                                <div className="border-t border-gray-100 pt-4 flex items-center justify-between">
 
-                                        </span>
+                                    <span className="font-bold text-gray-900">
+                                        Total
+                                    </span>
+
+                                    <div className="flex items-center text-xl font-bold text-orange-500">
+
+                                        <IndianRupee size={18} />
+
+                                        {Number(
+                                            cart.totalAmount || 0
+                                        ).toFixed(2)}
 
                                     </div>
 
@@ -534,57 +564,74 @@ function Checkout() {
 
                             </div>
 
-                            <div className="mt-6 bg-green-50 border border-green-200 rounded-xl p-4 flex gap-3">
 
-                                <CheckCircle2
-                                    size={22}
-                                    className="text-green-600 flex-shrink-0"
+                            {/* Secure Payment */}
+
+                            <div className="mt-5 bg-green-50 border border-green-100 rounded-lg p-3.5 flex gap-3">
+
+                                <ShieldCheck
+                                    size={20}
+                                    className="text-green-600 shrink-0"
                                 />
 
-                                <p className="text-sm text-green-700">
+                                <div>
 
-                                    Your payment will be securely processed
-                                    through Razorpay.
+                                    <p className="text-xs font-bold text-green-700">
+                                        Secure Payment
+                                    </p>
 
-                                </p>
+                                    <p className="text-xs text-green-600 mt-0.5 leading-5">
+                                        Your payment is securely processed
+                                        through Razorpay.
+                                    </p>
+
+                                </div>
 
                             </div>
+
+
+                            {/* Pay Button */}
 
                             <button
                                 onClick={handlePayment}
                                 disabled={processingPayment}
-                                className="w-full mt-7 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all"
+                                className="w-full mt-5 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white py-3 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md"
                             >
 
-                                {
-                                    processingPayment ? (
+                                {processingPayment ? (
 
-                                        <>
-                                            <Loader2
-                                                size={21}
-                                                className="animate-spin"
-                                            />
+                                    <>
 
-                                            Processing...
+                                        <Loader2
+                                            size={18}
+                                            className="animate-spin"
+                                        />
 
-                                        </>
+                                        Processing Payment...
 
-                                    ) : (
+                                    </>
 
-                                        <>
-                                            <CreditCard size={21}/>
+                                ) : (
 
-                                            Pay ₹
-                                            {Number(
-                                                cart.totalAmount || 0
-                                            ).toFixed(2)}
+                                    <>
 
-                                        </>
+                                        <CreditCard size={18} />
 
-                                    )
-                                }
+                                        Pay ₹
+                                        {Number(
+                                            cart.totalAmount || 0
+                                        ).toFixed(2)}
+
+                                    </>
+
+                                )}
 
                             </button>
+
+
+                            <p className="text-[11px] text-gray-400 text-center mt-3">
+                                You will be redirected to Razorpay to complete payment.
+                            </p>
 
                         </div>
 
@@ -601,8 +648,4 @@ function Checkout() {
 }
 
 export default Checkout;
-
-// ============================================================
-// End of Sharwari's work
-// ============================================================
 
