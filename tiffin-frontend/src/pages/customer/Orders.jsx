@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+
 import {
     ShoppingBag,
     IndianRupee,
     CalendarDays,
     ChevronRight,
     Loader2,
-    PackageCheck
+    PackageCheck,
+    ClipboardList
 } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
@@ -13,6 +15,7 @@ import toast from "react-hot-toast";
 
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import { getOrderHistory } from "../../api/orderApi";
+
 
 // ============================================================
 // Sharwari's work - Customer Orders Page
@@ -25,8 +28,9 @@ function Orders() {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
+
     // ============================================================
-    // Sharwari's work - Load customer order history
+    // Load Customer Order History
     // ============================================================
 
     useEffect(() => {
@@ -37,11 +41,17 @@ function Orders() {
 
                 setLoading(true);
 
-                const response = await getOrderHistory();
+                const response =
+                    await getOrderHistory();
 
-                console.log("Customer Orders:", response.data);
+                console.log(
+                    "Customer Orders:",
+                    response.data
+                );
 
-                setOrders(response.data || []);
+                setOrders(
+                    response.data || []
+                );
 
             } catch (error) {
 
@@ -65,12 +75,14 @@ function Orders() {
 
         };
 
+
         loadOrders();
 
     }, []);
 
+
     // ============================================================
-    // Sharwari's work - Status styling
+    // Status Styling
     // ============================================================
 
     const getStatusStyle = (status) => {
@@ -78,39 +90,43 @@ function Orders() {
         switch (status) {
 
             case "PLACED":
-                return "bg-blue-100 text-blue-700";
+                return "bg-blue-50 text-blue-700 border border-blue-100";
 
             case "CONFIRMED":
-                return "bg-indigo-100 text-indigo-700";
+                return "bg-indigo-50 text-indigo-700 border border-indigo-100";
 
             case "PREPARING":
-                return "bg-orange-100 text-orange-700";
+                return "bg-orange-50 text-orange-700 border border-orange-100";
 
             case "READY":
-                return "bg-green-100 text-green-700";
+                return "bg-green-50 text-green-700 border border-green-100";
 
             case "COMPLETED":
-                return "bg-gray-100 text-gray-700";
+                return "bg-gray-50 text-gray-700 border border-gray-200";
 
             case "CANCELLED":
-                return "bg-red-100 text-red-700";
+                return "bg-red-50 text-red-700 border border-red-100";
 
             default:
-                return "bg-gray-100 text-gray-700";
+                return "bg-gray-50 text-gray-700 border border-gray-200";
 
         }
 
     };
 
+
     // ============================================================
-    // Sharwari's work - Format order date
+    // Format Order Date
     // ============================================================
 
     const formatDate = (date) => {
 
         if (!date) {
+
             return "Date unavailable";
+
         }
+
 
         return new Date(date).toLocaleString(
             "en-IN",
@@ -125,8 +141,9 @@ function Orders() {
 
     };
 
+
     // ============================================================
-    // Sharwari's work - Loading state
+    // Loading State
     // ============================================================
 
     if (loading) {
@@ -135,12 +152,19 @@ function Orders() {
 
             <DashboardLayout>
 
-                <div className="min-h-[500px] flex items-center justify-center">
+                <div className="min-h-[400px] flex items-center justify-center">
 
-                    <Loader2
-                        size={50}
-                        className="animate-spin text-orange-500"
-                    />
+                    <div className="text-center">
+
+                        <div className="w-10 h-10 mx-auto rounded-full border-4 border-orange-100 border-t-orange-500 animate-spin" />
+
+                        <p className="text-sm text-gray-500 mt-3">
+
+                            Loading your orders...
+
+                        </p>
+
+                    </div>
 
                 </div>
 
@@ -150,8 +174,9 @@ function Orders() {
 
     }
 
+
     // ============================================================
-    // Sharwari's work - Empty orders
+    // Empty Orders
     // ============================================================
 
     if (orders.length === 0) {
@@ -160,41 +185,57 @@ function Orders() {
 
             <DashboardLayout>
 
-                <div className="bg-white rounded-3xl shadow-md p-10 min-h-[500px] flex flex-col items-center justify-center text-center">
+                <div className="max-w-5xl mx-auto">
 
-                    <div className="bg-orange-100 rounded-full p-6 mb-6">
+                    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm min-h-[400px] flex flex-col items-center justify-center text-center px-6">
 
-                        <ShoppingBag
-                            size={70}
-                            className="text-orange-500"
-                        />
+                        <div className="w-16 h-16 rounded-2xl bg-orange-50 flex items-center justify-center mb-5">
+
+                            <ShoppingBag
+                                size={30}
+                                className="text-orange-500"
+                            />
+
+                        </div>
+
+
+                        <p className="text-[10px] font-bold tracking-widest text-orange-500 uppercase">
+
+                            ORDER HISTORY
+
+                        </p>
+
+
+                        <h1 className="text-2xl font-bold text-gray-900 mt-1">
+
+                            No Orders Yet
+
+                        </h1>
+
+
+                        <p className="text-sm text-gray-500 mt-2 max-w-md">
+
+                            You haven't placed any orders yet.
+                            Browse the weekly menu and enjoy
+                            freshly prepared homemade meals.
+
+                        </p>
+
+
+                        <button
+                            onClick={() =>
+                                navigate("/customer/menu")
+                            }
+                            className="mt-6 inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-sm hover:shadow-md"
+                        >
+
+                            <ShoppingBag size={16} />
+
+                            Browse Menu
+
+                        </button>
 
                     </div>
-
-                    <h1 className="text-4xl font-extrabold text-gray-900">
-
-                        No Orders Yet
-
-                    </h1>
-
-                    <p className="text-gray-600 text-lg mt-4 max-w-lg">
-
-                        You haven't placed any orders yet.
-                        Browse our weekly menu and enjoy
-                        freshly prepared homemade meals.
-
-                    </p>
-
-                    <button
-                        onClick={() =>
-                            navigate("/customer/menu")
-                        }
-                        className="mt-8 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-semibold"
-                    >
-
-                        Browse Menu
-
-                    </button>
 
                 </div>
 
@@ -204,42 +245,70 @@ function Orders() {
 
     }
 
+
+    // ============================================================
+    // Orders Page
+    // ============================================================
+
     return (
 
         <DashboardLayout>
 
-            <div className="space-y-8">
+            <div className="max-w-6xl mx-auto space-y-5">
 
-                {/* =================================================
-                    Sharwari's work - Orders Header
-                    ================================================= */}
 
-                <div className="bg-white rounded-3xl shadow-md p-8">
+                {/* ==================================================
+                    Page Header
+                   ================================================== */}
 
-                    <div className="flex items-center gap-4">
+                <div className="bg-gradient-to-r from-orange-500 to-orange-400 rounded-2xl px-6 py-5 text-white shadow-md">
 
-                        <div className="bg-orange-100 p-4 rounded-2xl">
+                    <div className="flex items-center justify-between gap-4">
 
-                            <ShoppingBag
-                                size={32}
-                                className="text-orange-500"
-                            />
+                        <div className="flex items-center gap-3">
+
+                            <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center">
+
+                                <ShoppingBag size={23} />
+
+                            </div>
+
+
+                            <div>
+
+                                <p className="text-[10px] font-bold tracking-widest text-orange-100 uppercase">
+
+                                    ORDER HISTORY
+
+                                </p>
+
+
+                                <h1 className="text-2xl md:text-3xl font-bold">
+
+                                    My Orders
+
+                                </h1>
+
+
+                                <p className="text-sm text-orange-50 mt-1">
+
+                                    View your current and previous tiffin orders.
+
+                                </p>
+
+                            </div>
 
                         </div>
 
-                        <div>
 
-                            <h1 className="text-5xl font-extrabold text-gray-900">
+                        <div className="hidden sm:flex items-center gap-2 bg-white/15 px-3 py-2 rounded-lg text-xs font-semibold">
 
-                                My Orders
+                            <ClipboardList size={15} />
 
-                            </h1>
-
-                            <p className="mt-2 text-lg text-gray-600">
-
-                                View your current and previous tiffin orders.
-
-                            </p>
+                            {orders.length}{" "}
+                            {orders.length === 1
+                                ? "Order"
+                                : "Orders"}
 
                         </div>
 
@@ -247,36 +316,99 @@ function Orders() {
 
                 </div>
 
-                {/* =================================================
-                    Sharwari's work - Order List
-                    ================================================= */}
 
-                <div className="space-y-5">
+                {/* ==================================================
+                    Small Summary Card
+                   ================================================== */}
 
-                    {
-                        orders.map(order => (
+                <div className="bg-white border border-gray-200 rounded-xl shadow-sm px-5 py-3.5 flex items-center gap-3">
 
-                            <div
-                                key={order.id}
-                                className="bg-white rounded-3xl shadow-md hover:shadow-xl transition-all p-7"
-                            >
+                    <div className="w-9 h-9 rounded-lg bg-orange-50 flex items-center justify-center">
 
-                                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                        <PackageCheck
+                            size={18}
+                            className="text-orange-500"
+                        />
 
-                                    {/* Order information */}
+                    </div>
 
-                                    <div className="flex-1">
 
-                                        <div className="flex flex-wrap items-center gap-4">
+                    <div>
 
-                                            <h2 className="text-2xl font-bold text-gray-900">
+                        <p className="text-xs font-semibold text-gray-800">
 
-                                                Order #{order.id}
+                            Your order history
 
-                                            </h2>
+                        </p>
+
+
+                        <p className="text-[11px] text-gray-500 mt-0.5">
+
+                            Track your recent meals and order status.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {/* ==================================================
+                    Order List
+                   ================================================== */}
+
+                <div className="space-y-4">
+
+                    {orders.map(order => (
+
+                        <div
+                            key={order.id}
+                            className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 overflow-hidden"
+                        >
+
+                            <div className="p-5">
+
+                                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+
+
+                                    {/* ==================================================
+                                        Order Information
+                                       ================================================== */}
+
+                                    <div className="flex-1 min-w-0">
+
+                                        <div className="flex flex-wrap items-center gap-2.5">
+
+                                            <div className="w-9 h-9 rounded-lg bg-orange-50 flex items-center justify-center shrink-0">
+
+                                                <ShoppingBag
+                                                    size={17}
+                                                    className="text-orange-500"
+                                                />
+
+                                            </div>
+
+
+                                            <div>
+
+                                                <p className="text-[11px] text-gray-500">
+
+                                                    Order
+
+                                                </p>
+
+
+                                                <h2 className="text-base font-bold text-gray-900">
+
+                                                    #{order.id}
+
+                                                </h2>
+
+                                            </div>
+
 
                                             <span
-                                                className={`px-4 py-2 rounded-full text-sm font-bold ${getStatusStyle(order.status)}`}
+                                                className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${getStatusStyle(order.status)}`}
                                             >
 
                                                 {order.status}
@@ -285,30 +417,39 @@ function Orders() {
 
                                         </div>
 
-                                        <div className="flex flex-wrap gap-6 mt-4 text-gray-500">
 
-                                            <div className="flex items-center gap-2">
+                                        {/* Date + Items */}
 
-                                                <CalendarDays size={18}/>
+                                        <div className="flex flex-wrap gap-x-5 gap-y-2 mt-4">
+
+                                            <div className="flex items-center gap-1.5 text-xs text-gray-500">
+
+                                                <CalendarDays
+                                                    size={14}
+                                                />
 
                                                 <span>
-                                                    {formatDate(order.orderDate)}
+                                                    {formatDate(
+                                                        order.orderDate
+                                                    )}
                                                 </span>
 
                                             </div>
 
-                                            <div className="flex items-center gap-2">
 
-                                                <PackageCheck size={18}/>
+                                            <div className="flex items-center gap-1.5 text-xs text-gray-500">
+
+                                                <PackageCheck
+                                                    size={14}
+                                                />
 
                                                 <span>
 
-                                                    {order.items?.length || 0}
-                                                    {" "}
+                                                    {order.items?.length || 0}{" "}
+
                                                     {order.items?.length === 1
                                                         ? "item"
-                                                        : "items"
-                                                    }
+                                                        : "items"}
 
                                                 </span>
 
@@ -318,21 +459,31 @@ function Orders() {
 
                                     </div>
 
-                                    {/* Amount */}
 
-                                    <div className="flex items-center justify-between lg:justify-end gap-8">
+                                    {/* ==================================================
+                                        Amount + Details
+                                       ================================================== */}
+
+                                    <div className="flex items-center justify-between lg:justify-end gap-5 border-t lg:border-t-0 border-gray-100 pt-4 lg:pt-0">
+
 
                                         <div>
 
-                                            <p className="text-sm text-gray-500">
+                                            <p className="text-[11px] text-gray-500">
+
                                                 Total Amount
+
                                             </p>
 
-                                            <div className="flex items-center text-orange-500 mt-1">
 
-                                                <IndianRupee size={22}/>
+                                            <div className="flex items-center text-orange-500 mt-0.5">
 
-                                                <span className="text-2xl font-extrabold">
+                                                <IndianRupee
+                                                    size={17}
+                                                />
+
+
+                                                <span className="text-lg font-extrabold">
 
                                                     {Number(
                                                         order.totalAmount || 0
@@ -344,17 +495,20 @@ function Orders() {
 
                                         </div>
 
+
                                         <button
                                             onClick={() =>
                                                 navigate(
                                                     `/customer/orders/${order.id}`
                                                 )
                                             }
-                                            className="p-3 rounded-xl bg-orange-100 text-orange-600 hover:bg-orange-200 transition-all"
+                                            className="w-9 h-9 rounded-lg bg-orange-50 text-orange-600 hover:bg-orange-100 flex items-center justify-center transition-all"
                                             title="View order"
                                         >
 
-                                            <ChevronRight size={24}/>
+                                            <ChevronRight
+                                                size={19}
+                                            />
 
                                         </button>
 
@@ -364,8 +518,9 @@ function Orders() {
 
                             </div>
 
-                        ))
-                    }
+                        </div>
+
+                    ))}
 
                 </div>
 
@@ -377,7 +532,9 @@ function Orders() {
 
 }
 
+
 export default Orders;
+
 
 // ============================================================
 // End of Sharwari's work
