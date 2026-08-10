@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import {
     ShoppingBag,
-    Clock,
-    CheckCircle,
-    IndianRupee
+    Clock3,
+    CheckCircle2,
+    IndianRupee,
+    ArrowRight,
+    Loader2,
+    ClipboardList
 } from "lucide-react";
 
 import DashboardLayout from "../../components/layout/DashboardLayout";
@@ -96,9 +99,6 @@ function VendorDashboard() {
 
     // ============================================================
     // Revenue
-    //
-    // Revenue is calculated only from completed orders.
-    // Cancelled / pending / preparing orders are not included.
     // ============================================================
 
     const totalRevenue = orders
@@ -130,60 +130,74 @@ function VendorDashboard() {
 
         <DashboardLayout>
 
-            <div className="space-y-8">
-
+            <div className="space-y-6">
 
                 {/* ==================================================
-                    Dashboard Header
+                    Header
                    ================================================== */}
 
-                <div>
+                <div className="bg-gradient-to-r from-orange-500 to-orange-400 rounded-2xl px-6 py-6 text-white shadow-md">
 
-                    <h1 className="text-3xl font-bold text-gray-900">
-                        Vendor Dashboard
-                    </h1>
+                    <div className="flex items-center justify-between gap-5">
 
-                    <p className="mt-2 text-gray-600">
-                        Manage your orders and track your
-                        business activity.
-                    </p>
+                        <div>
+
+                            <p className="text-xs font-semibold tracking-wider text-orange-100 uppercase">
+                                VENDOR PORTAL
+                            </p>
+
+                            <h1 className="text-2xl md:text-3xl font-bold mt-1">
+                                Vendor Dashboard
+                            </h1>
+
+                            <p className="text-sm text-orange-50 mt-2 max-w-xl">
+                                Manage your orders and keep track of
+                                today's business activity.
+                            </p>
+
+                        </div>
+
+
+                        <div className="hidden sm:flex w-12 h-12 rounded-xl bg-white/15 items-center justify-center">
+
+                            <ClipboardList size={25} />
+
+                        </div>
+
+                    </div>
 
                 </div>
 
 
-
                 {/* ==================================================
-                    Statistics Cards
+                    Statistics
                    ================================================== */}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
 
 
-                    {/* ==================================================
-                        Pending Orders
-                       ================================================== */}
+                    {/* Pending */}
 
-                    <div className="bg-white rounded-2xl shadow-md p-6">
+                    <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
 
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between gap-3">
 
                             <div>
 
-                                <p className="text-gray-500">
+                                <p className="text-xs font-medium text-gray-500">
                                     Pending Orders
                                 </p>
 
-                                <h2 className="text-3xl font-bold mt-2">
+                                <h2 className="text-2xl font-bold text-gray-900 mt-1">
                                     {pendingOrders}
                                 </h2>
 
                             </div>
 
+                            <div className="w-9 h-9 rounded-lg bg-orange-50 flex items-center justify-center">
 
-                            <div className="bg-orange-100 p-4 rounded-xl">
-
-                                <Clock
-                                    size={28}
+                                <Clock3
+                                    size={19}
                                     className="text-orange-500"
                                 />
 
@@ -194,32 +208,28 @@ function VendorDashboard() {
                     </div>
 
 
+                    {/* Preparing */}
 
-                    {/* ==================================================
-                        Preparing Orders
-                       ================================================== */}
+                    <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
 
-                    <div className="bg-white rounded-2xl shadow-md p-6">
-
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between gap-3">
 
                             <div>
 
-                                <p className="text-gray-500">
+                                <p className="text-xs font-medium text-gray-500">
                                     Preparing
                                 </p>
 
-                                <h2 className="text-3xl font-bold mt-2">
+                                <h2 className="text-2xl font-bold text-gray-900 mt-1">
                                     {preparingOrders}
                                 </h2>
 
                             </div>
 
-
-                            <div className="bg-blue-100 p-4 rounded-xl">
+                            <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
 
                                 <ShoppingBag
-                                    size={28}
+                                    size={19}
                                     className="text-blue-500"
                                 />
 
@@ -230,32 +240,28 @@ function VendorDashboard() {
                     </div>
 
 
+                    {/* Completed */}
 
-                    {/* ==================================================
-                        Completed Orders
-                       ================================================== */}
+                    <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
 
-                    <div className="bg-white rounded-2xl shadow-md p-6">
-
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between gap-3">
 
                             <div>
 
-                                <p className="text-gray-500">
-                                    Completed Orders
+                                <p className="text-xs font-medium text-gray-500">
+                                    Completed
                                 </p>
 
-                                <h2 className="text-3xl font-bold mt-2">
+                                <h2 className="text-2xl font-bold text-gray-900 mt-1">
                                     {completedOrders}
                                 </h2>
 
                             </div>
 
+                            <div className="w-9 h-9 rounded-lg bg-green-50 flex items-center justify-center">
 
-                            <div className="bg-green-100 p-4 rounded-xl">
-
-                                <CheckCircle
-                                    size={28}
+                                <CheckCircle2
+                                    size={19}
                                     className="text-green-500"
                                 />
 
@@ -266,32 +272,28 @@ function VendorDashboard() {
                     </div>
 
 
+                    {/* Revenue */}
 
-                    {/* ==================================================
-                        Total Revenue
-                       ================================================== */}
+                    <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
 
-                    <div className="bg-white rounded-2xl shadow-md p-6">
+                        <div className="flex items-center justify-between gap-3">
 
-                        <div className="flex items-center justify-between">
+                            <div className="min-w-0">
 
-                            <div>
-
-                                <p className="text-gray-500">
+                                <p className="text-xs font-medium text-gray-500">
                                     Total Revenue
                                 </p>
 
-                                <h2 className="text-3xl font-bold mt-2">
+                                <h2 className="text-xl font-bold text-gray-900 mt-1 truncate">
                                     ₹{totalRevenue.toFixed(2)}
                                 </h2>
 
                             </div>
 
-
-                            <div className="bg-purple-100 p-4 rounded-xl">
+                            <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
 
                                 <IndianRupee
-                                    size={28}
+                                    size={19}
                                     className="text-purple-500"
                                 />
 
@@ -301,31 +303,35 @@ function VendorDashboard() {
 
                     </div>
 
-
                 </div>
-
 
 
                 {/* ==================================================
                     Pending Orders
                    ================================================== */}
 
-                <div className="bg-white rounded-2xl shadow-md p-6">
+                <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
 
+                    {/* Header */}
 
-                    {/* ==================================================
-                        Section Header
-                       ================================================== */}
-
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between gap-4">
 
                         <div>
 
-                            <h2 className="text-2xl font-bold">
-                                Pending Orders
-                            </h2>
+                            <div className="flex items-center gap-2">
 
-                            <p className="text-gray-500 mt-1">
+                                <ShoppingBag
+                                    size={19}
+                                    className="text-orange-500"
+                                />
+
+                                <h2 className="text-lg font-bold text-gray-900">
+                                    Pending Orders
+                                </h2>
+
+                            </div>
+
+                            <p className="text-xs text-gray-500 mt-1">
                                 Orders that need your attention
                             </p>
 
@@ -336,24 +342,30 @@ function VendorDashboard() {
                             onClick={() =>
                                 navigate("/vendor/orders")
                             }
-                            className="text-orange-500 font-semibold hover:underline"
+                            className="text-orange-500 hover:text-orange-600 text-sm font-semibold flex items-center gap-1 transition"
                         >
+
                             View All
+
+                            <ArrowRight size={15} />
+
                         </button>
 
                     </div>
 
 
-
-                    {/* ==================================================
-                        Loading State
-                       ================================================== */}
+                    {/* Loading */}
 
                     {loading ? (
 
-                        <div className="py-10 text-center">
+                        <div className="py-12 flex flex-col items-center justify-center">
 
-                            <p className="text-gray-500">
+                            <Loader2
+                                size={28}
+                                className="animate-spin text-orange-500"
+                            />
+
+                            <p className="text-xs text-gray-500 mt-2">
                                 Loading orders...
                             </p>
 
@@ -363,19 +375,25 @@ function VendorDashboard() {
                     ) : recentOrders.length === 0 ? (
 
 
-                        /* ==================================================
-                            Empty State
-                           ================================================== */
+                        /* Empty State */
 
-                        <div className="py-10 text-center">
+                        <div className="py-12 text-center">
 
-                            <ShoppingBag
-                                size={45}
-                                className="mx-auto text-gray-300"
-                            />
+                            <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mx-auto">
 
-                            <p className="mt-4 text-gray-500">
-                                No pending orders right now.
+                                <ShoppingBag
+                                    size={24}
+                                    className="text-gray-300"
+                                />
+
+                            </div>
+
+                            <p className="mt-3 text-sm font-medium text-gray-600">
+                                No pending orders
+                            </p>
+
+                            <p className="text-xs text-gray-400 mt-1">
+                                New customer orders will appear here.
                             </p>
 
                         </div>
@@ -384,65 +402,53 @@ function VendorDashboard() {
                     ) : (
 
 
-                        /* ==================================================
-                            Pending Order List
-                           ================================================== */
+                        /* Pending Orders */
 
-                        <div className="space-y-4">
+                        <div className="divide-y divide-gray-100">
 
                             {recentOrders.map(order => (
 
                                 <div
                                     key={order.id}
-                                    className="border rounded-xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+                                    className="px-5 py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:bg-gray-50/70 transition"
                                 >
 
+                                    {/* Order Information */}
 
-                                    {/* ==================================================
-                                        Order Information
-                                       ================================================== */}
+                                    <div className="min-w-0">
 
-                                    <div>
+                                        <div className="flex items-center gap-2">
 
-                                        <h3 className="font-bold text-gray-900">
-                                            Order #{order.id}
-                                        </h3>
+                                            <h3 className="text-sm font-bold text-gray-900">
+                                                Order #{order.id}
+                                            </h3>
 
-                                        <p className="text-sm text-gray-500 mt-1">
+                                            <span
+                                                className={`px-2 py-1 rounded-full text-[11px] font-semibold ${
+                                                    order.status === "PLACED"
+                                                        ? "bg-blue-50 text-blue-700"
+                                                        : "bg-indigo-50 text-indigo-700"
+                                                }`}
+                                            >
+                                                {order.status}
+                                            </span>
+
+                                        </div>
+
+                                        <p className="text-xs text-gray-500 mt-1">
                                             Customer #{order.customerId}
                                         </p>
 
                                     </div>
 
 
+                                    {/* Amount + Action */}
 
-                                    {/* ==================================================
-                                        Status + Amount
-                                       ================================================== */}
+                                    <div className="flex items-center justify-between sm:justify-end gap-4">
 
-                                    <div className="flex items-center gap-6">
+                                        <div className="flex items-center gap-1 text-sm font-bold text-gray-900">
 
-
-                                        {/* Status */}
-
-                                        <span
-                                            className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                                                order.status === "PLACED"
-                                                    ? "bg-blue-100 text-blue-700"
-                                                    : "bg-indigo-100 text-indigo-700"
-                                            }`}
-                                        >
-                                            {order.status}
-                                        </span>
-
-
-                                        {/* Amount */}
-
-                                        <div className="flex items-center gap-1 font-bold text-orange-500">
-
-                                            <IndianRupee
-                                                size={17}
-                                            />
+                                            <IndianRupee size={15} />
 
                                             {Number(
                                                 order.totalAmount || 0
@@ -450,9 +456,16 @@ function VendorDashboard() {
 
                                         </div>
 
+                                        <button
+                                            onClick={() =>
+                                                navigate("/vendor/orders")
+                                            }
+                                            className="text-xs font-semibold text-orange-500 hover:text-orange-600"
+                                        >
+                                            Manage
+                                        </button>
 
                                     </div>
-
 
                                 </div>
 
@@ -473,5 +486,5 @@ function VendorDashboard() {
 
 }
 
-
 export default VendorDashboard;
+

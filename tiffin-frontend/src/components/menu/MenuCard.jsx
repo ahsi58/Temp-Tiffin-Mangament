@@ -47,20 +47,25 @@ function MenuCard({ menu }) {
     // End of Sharwari's work
     // ============================================================
 
+
     if (!menu) {
 
         return (
 
-            <div className="bg-white rounded-3xl border-2 border-dashed border-gray-300 h-[420px] flex items-center justify-center">
+            <div className="bg-white rounded-2xl border border-dashed border-gray-300 min-h-[220px] flex items-center justify-center">
 
                 <div className="text-center">
 
-                    <div className="text-6xl mb-4">
+                    <div className="text-4xl mb-3">
                         🍽️
                     </div>
 
-                    <p className="text-gray-500 font-semibold">
+                    <p className="text-gray-500 font-semibold text-sm">
                         Menu Not Available
+                    </p>
+
+                    <p className="text-gray-400 text-xs mt-1">
+                        No meal has been added for this slot
                     </p>
 
                 </div>
@@ -75,119 +80,156 @@ function MenuCard({ menu }) {
 
     return (
 
-        <div className="group bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+        <div className="group bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300">
 
             {/* Header */}
 
             <div
-                className={`p-6 text-white ${
+                className={`px-5 py-4 text-white ${
                     isLunch
-                        ? "bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600"
-                        : "bg-gradient-to-r from-indigo-500 via-purple-500 to-violet-600"
+                        ? "bg-gradient-to-r from-orange-400 to-orange-500"
+                        : "bg-gradient-to-r from-indigo-500 to-purple-600"
                 }`}
             >
 
-                <div className="flex justify-between">
+                <div className="flex items-center justify-between gap-4">
 
-                    <div>
+                    <div className="min-w-0">
 
-                        <h2 className="text-2xl font-bold">
+                        <div className="flex items-center gap-2">
 
-                            {isLunch ? "Lunch" : "Dinner"}
+                            <h2 className="text-lg font-bold">
+                                {isLunch ? "Lunch" : "Dinner"}
+                            </h2>
 
-                        </h2>
+                            <span className="text-white/70">
+                                •
+                            </span>
 
-                        <p className="mt-2 text-lg font-semibold text-white">
+                            <span className="text-xs font-medium text-white/90">
+                                {isLunch ? "Afternoon Meal" : "Evening Meal"}
+                            </span>
 
+                        </div>
+
+                        <p className="mt-1 text-sm font-medium text-white/90 truncate">
                             {menu.title}
-
                         </p>
 
                     </div>
 
-                    {
-                        menu.available ?
 
-                            <span className="bg-white/20 px-4 py-2 rounded-full flex items-center gap-2 text-sm">
+                    {/* Availability */}
 
-                                <CheckCircle2 size={18}/>
+                    {menu.available ? (
 
-                                Available
+                        <span className="shrink-0 bg-white/20 px-2.5 py-1.5 rounded-full flex items-center gap-1.5 text-xs font-medium">
 
-                            </span>
+                            <CheckCircle2 size={14} />
 
-                            :
+                            Available
 
-                            <span className="bg-red-500 px-4 py-2 rounded-full flex items-center gap-2 text-sm">
+                        </span>
 
-                                <XCircle size={18}/>
+                    ) : (
 
-                                Unavailable
+                        <span className="shrink-0 bg-red-500/90 px-2.5 py-1.5 rounded-full flex items-center gap-1.5 text-xs font-medium">
 
-                            </span>
-                    }
+                            <XCircle size={14} />
+
+                            Unavailable
+
+                        </span>
+
+                    )}
 
                 </div>
 
             </div>
 
+
             {/* Body */}
 
-            <div className="p-8">
+            <div className="p-5">
 
-                <p className="text-gray-700 text-lg leading-8 mt-4">
+                {/* Description */}
 
-                    {menu.description}
+                {menu.description && (
 
-                </p>
+                    <p className="text-sm text-gray-600 leading-6">
+                        {menu.description}
+                    </p>
 
-                <div className="mt-6">
+                )}
 
-                    <h3 className="text-xl font-bold text-gray-900 mb-5">
 
-                        Included Items
+                {/* Included Items */}
 
-                    </h3>
+                {menu.items?.length > 0 && (
 
-                    <div className="flex flex-wrap gap-3">
+                    <div className="mt-4">
 
-                        {
-                            menu.items.map(item => (
+                        <div className="flex items-center justify-between mb-2.5">
+
+                            <h3 className="text-sm font-bold text-gray-800">
+                                Included Items
+                            </h3>
+
+                            <span className="text-xs text-gray-400">
+                                {menu.items.length} items
+                            </span>
+
+                        </div>
+
+                        <div className="flex flex-wrap gap-2">
+
+                            {menu.items.map(item => (
 
                                 <span
                                     key={item.id}
-                                    className="bg-orange-100 text-gray-800 px-4 py-2 rounded-full text-base font-medium"
+                                    className="bg-orange-50 border border-orange-100 text-gray-700 px-2.5 py-1.5 rounded-lg text-xs font-medium"
                                 >
 
                                     🍴 {item.itemName}
 
                                 </span>
 
-                            ))
-                        }
+                            ))}
+
+                        </div>
 
                     </div>
 
-                </div>
+                )}
 
-                <div className="border-t mt-8 pt-6 flex justify-between items-center">
 
-                    <div className="flex items-center gap-2">
+                {/* Price */}
 
-                        <IndianRupee
-                            size={24}
-                            className="text-orange-500"
-                        />
+                <div className="border-t border-gray-100 mt-5 pt-4 flex items-center justify-between">
 
-                        <span className="text-4xl font-extrabold text-gray-900">
+                    <div>
 
-                            {menu.price}
+                        <p className="text-xs text-gray-400 mb-0.5">
+                            Meal Price
+                        </p>
 
-                        </span>
+                        <div className="flex items-center gap-1">
+
+                            <IndianRupee
+                                size={18}
+                                className="text-orange-500"
+                            />
+
+                            <span className="text-2xl font-bold text-gray-900">
+                                {menu.price}
+                            </span>
+
+                        </div>
 
                     </div>
 
-                    <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm">
+
+                    <span className="bg-green-50 border border-green-100 text-green-700 px-2.5 py-1.5 rounded-full text-xs font-medium">
 
                         Freshly Prepared
 
@@ -195,37 +237,35 @@ function MenuCard({ menu }) {
 
                 </div>
 
-                {/* =====================================================
-                    Sharwari's work - Add To Cart button
-                    ===================================================== */}
+
+                {/* Add To Cart */}
 
                 <button
                     onClick={handleAddToCart}
                     disabled={!menu.available || adding}
-                    className={`w-full mt-6 py-4 rounded-xl font-semibold flex justify-center items-center gap-2 transition-all ${
+                    className={`w-full mt-4 py-2.5 rounded-lg font-semibold text-sm flex justify-center items-center gap-2 transition-all ${
                         menu.available && !adding
-                            ? "bg-orange-500 hover:bg-orange-600 text-white"
-                            : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                            ? "bg-orange-500 hover:bg-orange-600 text-white shadow-sm hover:shadow-md"
+                            : "bg-gray-100 text-gray-400 cursor-not-allowed"
                     }`}
                 >
 
-                    <ShoppingCart size={20}/>
+                    <ShoppingCart size={17} />
 
-                    {adding ? "Adding..." : "Add To Cart"}
+                    {adding
+                        ? "Adding..."
+                        : menu.available
+                            ? "Add to Cart"
+                            : "Unavailable"
+                    }
 
                 </button>
-
-                {/* =====================================================
-                    End of Sharwari's work
-                    ===================================================== */}
 
             </div>
 
         </div>
 
     );
-
 }
 
 export default MenuCard;
-

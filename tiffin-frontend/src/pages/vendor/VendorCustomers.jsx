@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
+
 import {
     Users,
     ShoppingBag,
     IndianRupee,
-    Clock
+    Clock,
+    UserRound,
+    UserCheck,
+    Loader2,
+    ClipboardList
 } from "lucide-react";
+
 import toast from "react-hot-toast";
 
 import DashboardLayout from "../../components/layout/DashboardLayout";
@@ -150,9 +156,9 @@ function VendorCustomers() {
     const activeCustomers =
         customers.filter(
             customer =>
-                customer.lastOrderStatus !== "CANCELLED"
+                customer.lastOrderStatus !==
+                "CANCELLED"
         ).length;
-
 
 
     // ============================================================
@@ -178,6 +184,40 @@ function VendorCustomers() {
 
 
     // ============================================================
+    // Status styling
+    // ============================================================
+
+    const getStatusStyle = (status) => {
+
+        switch (status) {
+
+            case "COMPLETED":
+                return "bg-green-50 text-green-700 border-green-100";
+
+            case "CANCELLED":
+                return "bg-red-50 text-red-700 border-red-100";
+
+            case "READY":
+                return "bg-emerald-50 text-emerald-700 border-emerald-100";
+
+            case "PREPARING":
+                return "bg-orange-50 text-orange-700 border-orange-100";
+
+            case "CONFIRMED":
+                return "bg-indigo-50 text-indigo-700 border-indigo-100";
+
+            case "PLACED":
+                return "bg-blue-50 text-blue-700 border-blue-100";
+
+            default:
+                return "bg-gray-50 text-gray-600 border-gray-100";
+
+        }
+
+    };
+
+
+    // ============================================================
     // Loading state
     // ============================================================
 
@@ -187,9 +227,14 @@ function VendorCustomers() {
 
             <DashboardLayout>
 
-                <div className="flex items-center justify-center min-h-[400px]">
+                <div className="min-h-[400px] flex flex-col items-center justify-center">
 
-                    <p className="text-gray-500">
+                    <Loader2
+                        size={30}
+                        className="animate-spin text-orange-500"
+                    />
+
+                    <p className="text-sm text-gray-500 mt-3">
                         Loading customers...
                     </p>
 
@@ -206,58 +251,87 @@ function VendorCustomers() {
 
         <DashboardLayout>
 
-            <div className="space-y-8">
+            <div className="space-y-6">
 
 
                 {/* ==================================================
                     Header
                    ================================================== */}
 
-                <div>
+                <div className="bg-gradient-to-r from-orange-500 to-orange-400 rounded-2xl px-6 py-5 text-white shadow-md">
 
-                    <h1 className="text-3xl font-bold text-gray-900">
-                        Customers
-                    </h1>
+                    <div className="flex items-center justify-between gap-4">
 
-                    <p className="mt-2 text-gray-600">
-                        View customers who have placed orders
-                        with your tiffin service.
-                    </p>
+                        <div className="flex items-center gap-3">
+
+                            <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center">
+
+                                <Users size={23} />
+
+                            </div>
+
+                            <div>
+
+                                <p className="text-xs font-semibold tracking-wider text-orange-100 uppercase">
+                                    CUSTOMER MANAGEMENT
+                                </p>
+
+                                <h1 className="text-2xl md:text-3xl font-bold">
+                                    Customers
+                                </h1>
+
+                                <p className="text-sm text-orange-50 mt-1">
+                                    View customer activity and order history.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div className="hidden sm:flex items-center gap-2 bg-white/15 px-3 py-2 rounded-lg text-sm font-semibold">
+
+                            <UserRound size={16} />
+
+                            {totalCustomers}
+
+                        </div>
+
+                    </div>
 
                 </div>
-
 
 
                 {/* ==================================================
                     Statistics
                    ================================================== */}
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
 
                     {/* Total Customers */}
 
-                    <div className="bg-white rounded-2xl shadow-md p-6">
+                    <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
 
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between gap-3">
 
                             <div>
 
-                                <p className="text-gray-500">
+                                <p className="text-xs font-medium text-gray-500">
                                     Total Customers
                                 </p>
 
-                                <h2 className="text-3xl font-bold mt-2">
+                                <h2 className="text-2xl font-bold text-gray-900 mt-1">
                                     {totalCustomers}
                                 </h2>
 
                             </div>
 
 
-                            <div className="bg-orange-100 p-4 rounded-xl">
+                            <div className="w-9 h-9 rounded-lg bg-orange-50 flex items-center justify-center">
 
                                 <Users
-                                    size={28}
+                                    size={19}
                                     className="text-orange-500"
                                 />
 
@@ -268,30 +342,29 @@ function VendorCustomers() {
                     </div>
 
 
-
                     {/* Total Orders */}
 
-                    <div className="bg-white rounded-2xl shadow-md p-6">
+                    <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
 
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between gap-3">
 
                             <div>
 
-                                <p className="text-gray-500">
+                                <p className="text-xs font-medium text-gray-500">
                                     Total Orders
                                 </p>
 
-                                <h2 className="text-3xl font-bold mt-2">
+                                <h2 className="text-2xl font-bold text-gray-900 mt-1">
                                     {totalOrders}
                                 </h2>
 
                             </div>
 
 
-                            <div className="bg-blue-100 p-4 rounded-xl">
+                            <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
 
                                 <ShoppingBag
-                                    size={28}
+                                    size={19}
                                     className="text-blue-500"
                                 />
 
@@ -302,30 +375,29 @@ function VendorCustomers() {
                     </div>
 
 
-
                     {/* Active Customers */}
 
-                    <div className="bg-white rounded-2xl shadow-md p-6">
+                    <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
 
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between gap-3">
 
                             <div>
 
-                                <p className="text-gray-500">
+                                <p className="text-xs font-medium text-gray-500">
                                     Active Customers
                                 </p>
 
-                                <h2 className="text-3xl font-bold mt-2">
+                                <h2 className="text-2xl font-bold text-gray-900 mt-1">
                                     {activeCustomers}
                                 </h2>
 
                             </div>
 
 
-                            <div className="bg-green-100 p-4 rounded-xl">
+                            <div className="w-9 h-9 rounded-lg bg-green-50 flex items-center justify-center">
 
-                                <Users
-                                    size={28}
+                                <UserCheck
+                                    size={19}
                                     className="text-green-500"
                                 />
 
@@ -335,43 +407,65 @@ function VendorCustomers() {
 
                     </div>
 
-
                 </div>
 
 
-
                 {/* ==================================================
-                    Customer List
+                    Customer Overview
                    ================================================== */}
 
-                <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+                <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
 
 
-                    <div className="p-6 border-b">
+                    {/* Section Header */}
 
-                        <h2 className="text-2xl font-bold">
-                            Customer Overview
-                        </h2>
+                    <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
 
-                        <p className="text-gray-500 mt-1">
-                            Customers based on their order activity.
-                        </p>
+                        <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
+
+                            <ClipboardList
+                                size={17}
+                                className="text-orange-500"
+                            />
+
+                        </div>
+
+                        <div>
+
+                            <h2 className="text-base font-bold text-gray-900">
+                                Customer Overview
+                            </h2>
+
+                            <p className="text-xs text-gray-500 mt-0.5">
+                                Customers based on their order activity.
+                            </p>
+
+                        </div>
 
                     </div>
 
 
+                    {/* Empty State */}
 
                     {customers.length === 0 ? (
 
-                        <div className="py-16 text-center">
+                        <div className="py-14 text-center">
 
-                            <Users
-                                size={50}
-                                className="mx-auto text-gray-300"
-                            />
+                            <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mx-auto">
 
-                            <p className="mt-4 text-gray-500">
-                                No customers have placed orders yet.
+                                <Users
+                                    size={24}
+                                    className="text-gray-300"
+                                />
+
+                            </div>
+
+                            <p className="mt-3 text-sm font-medium text-gray-600">
+                                No customers yet
+                            </p>
+
+                            <p className="text-xs text-gray-400 mt-1">
+                                Customers will appear after their first order.
                             </p>
 
                         </div>
@@ -383,27 +477,29 @@ function VendorCustomers() {
                             <table className="w-full">
 
 
-                                <thead className="bg-gray-50">
+                                {/* Table Header */}
+
+                                <thead className="bg-gray-50/80">
 
                                     <tr>
 
-                                        <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                                        <th className="text-left px-5 py-3 text-[11px] font-bold uppercase tracking-wide text-gray-500">
                                             Customer
                                         </th>
 
-                                        <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                                        <th className="text-left px-5 py-3 text-[11px] font-bold uppercase tracking-wide text-gray-500">
                                             Orders
                                         </th>
 
-                                        <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                                        <th className="text-left px-5 py-3 text-[11px] font-bold uppercase tracking-wide text-gray-500">
                                             Total Spent
                                         </th>
 
-                                        <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                                        <th className="text-left px-5 py-3 text-[11px] font-bold uppercase tracking-wide text-gray-500">
                                             Last Order
                                         </th>
 
-                                        <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                                        <th className="text-left px-5 py-3 text-[11px] font-bold uppercase tracking-wide text-gray-500">
                                             Status
                                         </th>
 
@@ -412,8 +508,9 @@ function VendorCustomers() {
                                 </thead>
 
 
-                                <tbody className="divide-y">
+                                {/* Table Body */}
 
+                                <tbody className="divide-y divide-gray-100">
 
                                     {customers.map(
                                         (customer) => (
@@ -422,20 +519,20 @@ function VendorCustomers() {
                                                 key={
                                                     customer.customerId
                                                 }
-                                                className="hover:bg-gray-50"
+                                                className="hover:bg-orange-50/30 transition"
                                             >
 
 
                                                 {/* Customer */}
 
-                                                <td className="px-6 py-4">
+                                                <td className="px-5 py-3.5">
 
-                                                    <div className="flex items-center gap-3">
+                                                    <div className="flex items-center gap-2.5">
 
-                                                        <div className="bg-orange-100 p-2 rounded-full">
+                                                        <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center shrink-0">
 
                                                             <Users
-                                                                size={18}
+                                                                size={16}
                                                                 className="text-orange-500"
                                                             />
 
@@ -444,15 +541,18 @@ function VendorCustomers() {
 
                                                         <div>
 
-                                                            <p className="font-semibold text-gray-900">
+                                                            <p className="text-sm font-semibold text-gray-900">
+
                                                                 Customer #
+
                                                                 {
                                                                     customer.customerId
                                                                 }
+
                                                             </p>
 
-                                                            <p className="text-sm text-gray-500">
-                                                                Customer
+                                                            <p className="text-[11px] text-gray-400">
+                                                                Registered customer
                                                             </p>
 
                                                         </div>
@@ -462,22 +562,23 @@ function VendorCustomers() {
                                                 </td>
 
 
-
                                                 {/* Orders */}
 
-                                                <td className="px-6 py-4">
+                                                <td className="px-5 py-3.5">
 
-                                                    <div className="flex items-center gap-2">
+                                                    <div className="flex items-center gap-1.5">
 
                                                         <ShoppingBag
-                                                            size={17}
+                                                            size={15}
                                                             className="text-gray-400"
                                                         />
 
-                                                        <span className="font-medium">
+                                                        <span className="text-sm font-semibold text-gray-700">
+
                                                             {
                                                                 customer.orderCount
                                                             }
+
                                                         </span>
 
                                                     </div>
@@ -485,15 +586,14 @@ function VendorCustomers() {
                                                 </td>
 
 
-
                                                 {/* Total Spent */}
 
-                                                <td className="px-6 py-4">
+                                                <td className="px-5 py-3.5">
 
-                                                    <div className="flex items-center gap-1 font-semibold">
+                                                    <div className="flex items-center gap-0.5 text-sm font-semibold text-gray-800">
 
                                                         <IndianRupee
-                                                            size={16}
+                                                            size={14}
                                                         />
 
                                                         {
@@ -507,51 +607,43 @@ function VendorCustomers() {
                                                 </td>
 
 
-
                                                 {/* Last Order */}
 
-                                                <td className="px-6 py-4">
+                                                <td className="px-5 py-3.5">
 
-                                                    <div className="flex items-center gap-2">
+                                                    <div className="flex items-center gap-1.5 text-sm text-gray-600">
 
                                                         <Clock
-                                                            size={16}
+                                                            size={14}
                                                             className="text-gray-400"
                                                         />
 
-                                                        <span>
-                                                            {
-                                                                formatDate(
-                                                                    customer.lastOrderDate
-                                                                )
-                                                            }
-                                                        </span>
+                                                        {
+                                                            formatDate(
+                                                                customer.lastOrderDate
+                                                            )
+                                                        }
 
                                                     </div>
 
                                                 </td>
 
 
-
                                                 {/* Status */}
 
-                                                <td className="px-6 py-4">
+                                                <td className="px-5 py-3.5">
 
                                                     <span
-                                                        className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                                                            customer.lastOrderStatus ===
-                                                            "COMPLETED"
-                                                                ? "bg-green-100 text-green-700"
-                                                                : customer.lastOrderStatus ===
-                                                                  "CANCELLED"
-                                                                ? "bg-red-100 text-red-700"
-                                                                : "bg-blue-100 text-blue-700"
-                                                        }`}
+                                                        className={`inline-flex px-2.5 py-1 rounded-full border text-[11px] font-bold ${getStatusStyle(
+                                                            customer.lastOrderStatus
+                                                        )}`}
                                                     >
+
                                                         {
                                                             customer.lastOrderStatus ||
                                                             "N/A"
                                                         }
+
                                                     </span>
 
                                                 </td>
@@ -561,7 +653,6 @@ function VendorCustomers() {
 
                                         )
                                     )}
-
 
                                 </tbody>
 
@@ -573,7 +664,6 @@ function VendorCustomers() {
 
                 </div>
 
-
             </div>
 
         </DashboardLayout>
@@ -584,3 +674,4 @@ function VendorCustomers() {
 
 
 export default VendorCustomers;
+
