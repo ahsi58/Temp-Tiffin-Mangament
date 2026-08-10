@@ -2624,23 +2624,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Hp\\.nuget\\packages\\": {},
+    "C:\\Users\\patil\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CDAC_PROJECT\\FeedbackService\\FeedbackService.csproj",
+      "projectUniqueName": "D:\\Sunbeam\\tiffin_forked_project\\Temp-Tiffin-Mangament\\tiffin-backend\\FeedbackService\\FeedbackService.csproj",
       "projectName": "FeedbackService",
-      "projectPath": "D:\\CDAC_PROJECT\\FeedbackService\\FeedbackService.csproj",
-      "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-      "outputPath": "D:\\CDAC_PROJECT\\FeedbackService\\obj\\",
+      "projectPath": "D:\\Sunbeam\\tiffin_forked_project\\Temp-Tiffin-Mangament\\tiffin-backend\\FeedbackService\\FeedbackService.csproj",
+      "packagesPath": "C:\\Users\\patil\\.nuget\\packages\\",
+      "outputPath": "D:\\Sunbeam\\tiffin_forked_project\\Temp-Tiffin-Mangament\\tiffin-backend\\FeedbackService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\patil\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
