@@ -1,12 +1,13 @@
-import AppRoutes from "./routes/AppRoutes"
+import AppRoutes from "./routes/AppRoutes";
+import AIAssistant from "./components/ai-assisstant/AIAssistant";
 
 function App() {
-
   return (
     <>
-    <AppRoutes />
+      <AppRoutes />
+      <AIAssistant />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
