@@ -91,7 +91,7 @@ function Sidebar() {
     };
 
     return (
-        <aside className="w-64 bg-white border-r border-gray-200 min-h-screen flex flex-col justify-between">
+        <aside className="fixed left-0 top-16 z-40 w-64 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 flex flex-col justify-between">
 
             <nav className="p-4">
 
