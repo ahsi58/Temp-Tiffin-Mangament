@@ -1,333 +1,681 @@
+/* ============================================================
+   Feedback Page
+   ============================================================ */
+
 .feedback-page {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px 0 40px;
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 4px 0 32px;
 }
 
-/* Header */
 
-.feedback-page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 30px;
-  margin-bottom: 30px;
+/* ============================================================
+   Header
+   ============================================================ */
+
+.feedback-header {
+    background: linear-gradient(
+        135deg,
+        #f97316,
+        #fb923c
+    );
+
+    border-radius: 18px;
+
+    padding: 22px 26px;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    box-shadow:
+        0 6px 18px rgba(249, 115, 22, 0.16);
+
+    margin-bottom: 20px;
 }
+
 
 .feedback-eyebrow {
-  margin: 0 0 8px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #f97316;
+    display: block;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+
+    color: #ffedd5;
+
+    margin-bottom: 4px;
 }
 
-.feedback-page-header h1 {
-  margin: 0;
-  color: #1f2937;
-  font-size: 32px;
-  font-weight: 700;
+
+.feedback-header h1 {
+    margin: 0;
+
+    font-size: 28px;
+
+    line-height: 1.2;
+
+    font-weight: 800;
 }
 
-.feedback-page-header > div:first-child > p:last-child {
-  margin: 10px 0 0;
-  color: #6b7280;
-  font-size: 15px;
-  line-height: 1.6;
+
+.feedback-header p {
+    margin: 6px 0 0;
+
+    font-size: 13px;
+
+    color: #fff7ed;
+
+    line-height: 1.5;
 }
+
 
 .feedback-header-icon {
-  width: 64px;
-  height: 64px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 16px;
-  background: #fff7ed;
-  color: #f97316;
-  border: 1px solid #fed7aa;
+    width: 46px;
+
+    height: 46px;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.16);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
 }
 
-/* Statistics */
+
+/* ============================================================
+   Statistics
+   ============================================================ */
 
 .feedback-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin-bottom: 35px;
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-bottom: 24px;
 }
+
 
 .feedback-stat-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 20px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 13px;
+
+    padding: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.035);
+
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
+
+
+.feedback-stat-card:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 14px rgba(0, 0, 0, 0.07);
+}
+
 
 .feedback-stat-icon {
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
+    width: 36px;
+
+    height: 36px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
 }
+
 
 .feedback-stat-icon.orange {
-  background: #fff7ed;
-  color: #f97316;
+    background: #fff7ed;
+
+    color: #f97316;
 }
+
 
 .feedback-stat-icon.blue {
-  background: #eff6ff;
-  color: #2563eb;
+    background: #eff6ff;
+
+    color: #3b82f6;
 }
+
 
 .feedback-stat-icon.green {
-  background: #f0fdf4;
-  color: #16a34a;
+    background: #f0fdf4;
+
+    color: #22c55e;
 }
+
 
 .feedback-stat-icon.yellow {
-  background: #fffbeb;
-  color: #d97706;
+    background: #fefce8;
+
+    color: #eab308;
 }
+
 
 .feedback-stat-card span {
-  display: block;
-  margin-bottom: 4px;
-  color: #6b7280;
-  font-size: 12px;
+    display: block;
+
+    font-size: 11px;
+
+    color: #6b7280;
+
+    margin-bottom: 2px;
 }
+
 
 .feedback-stat-card strong {
-  display: block;
-  color: #1f2937;
-  font-size: 22px;
-  font-weight: 700;
+    display: block;
+
+    font-size: 21px;
+
+    line-height: 1.2;
+
+    color: #111827;
+
+    font-weight: 750;
 }
 
-/* Section Header */
+
+/* ============================================================
+   Section Header
+   ============================================================ */
 
 .feedback-section-header {
-  margin-bottom: 18px;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 12px;
 }
+
 
 .feedback-section-header h2 {
-  margin: 0;
-  color: #1f2937;
-  font-size: 21px;
-  font-weight: 650;
+    margin: 0;
+
+    font-size: 18px;
+
+    color: #111827;
+
+    font-weight: 750;
 }
+
 
 .feedback-section-header p {
-  margin: 5px 0 0;
-  color: #6b7280;
-  font-size: 13px;
+    margin: 3px 0 0;
+
+    font-size: 12px;
+
+    color: #6b7280;
 }
 
-/* Feedback Grid */
+
+.feedback-count {
+    background: #fff7ed;
+
+    color: #ea580c;
+
+    border: 1px solid #fed7aa;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   Feedback Grid
+   ============================================================ */
 
 .feedback-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    /*
+       Important:
+       Gives cards enough breathing room so the hover
+       animation never visually collides with another card.
+    */
+    padding: 3px 2px 8px;
 }
+
+
+/* ============================================================
+   Feedback Card
+   ============================================================ */
 
 .feedback-card {
-  padding: 22px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
+    position: relative;
+
+    /*
+       Keep the card in its own stacking context.
+    */
+    isolation: isolate;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    padding: 17px;
+
+    min-width: 0;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.035);
+
+    /*
+       ONLY a tiny lift.
+       This prevents the card from jumping into
+       neighboring cards.
+    */
+    transform: translateY(0);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
 }
+
 
 .feedback-card:hover {
-  transform: translateY(-2px);
-  border-color: #fed7aa;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.07);
+    transform: translateY(-2px);
+
+    /*
+       Keep hovered card above its neighbor,
+       without creating a large overlap.
+    */
+    z-index: 2;
+
+    border-color: #fed7aa;
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.08);
 }
+
+
+/* ============================================================
+   Card Top
+   ============================================================ */
 
 .feedback-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 16px;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 12px;
 }
+
 
 .feedback-rating {
-  display: flex;
-  gap: 3px;
-  color: #f59e0b;
+    display: flex;
+
+    align-items: center;
+
+    gap: 2px;
+
+    color: #f59e0b;
+
+    flex-shrink: 0;
 }
+
 
 .feedback-date {
-  color: #9ca3af;
-  font-size: 12px;
-  white-space: nowrap;
+    font-size: 10px;
+
+    color: #9ca3af;
+
+    white-space: nowrap;
 }
+
+
+/* ============================================================
+   Comment
+   ============================================================ */
 
 .feedback-comment {
-  min-height: 70px;
-  margin: 0 0 20px;
-  color: #374151;
-  font-size: 14px;
-  line-height: 1.7;
+    margin: 0;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+
+    /*
+       Prevent extremely long feedback from making
+       cards unnecessarily large.
+    */
+    overflow-wrap: anywhere;
 }
 
-/* Customer */
+
+/* ============================================================
+   Footer
+   ============================================================ */
 
 .feedback-footer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-top: 15px;
-  border-top: 1px solid #f1f5f9;
-  color: #6b7280;
-  font-size: 13px;
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 15px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid #f3f4f6;
 }
+
 
 .customer-avatar {
-  width: 34px;
-  height: 34px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: #fff7ed;
-  color: #ea580c;
-  font-size: 13px;
-  font-weight: 700;
+    width: 31px;
+
+    height: 31px;
+
+    border-radius: 9px;
+
+    background: #fff7ed;
+
+    color: #ea580c;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    flex-shrink: 0;
 }
 
-/* Empty State */
 
-.feedback-empty {
-  padding: 65px 25px;
-  text-align: center;
-  background: #ffffff;
-  border: 1px dashed #d1d5db;
-  border-radius: 16px;
+.customer-info {
+    min-width: 0;
 }
 
-.feedback-empty-icon {
-  width: 58px;
-  height: 58px;
-  margin: 0 auto 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 15px;
-  background: #fff7ed;
-  color: #f97316;
+
+.customer-info span {
+    display: block;
+
+    max-width: 100%;
+
+    color: #374151;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
 }
 
-.feedback-empty h3 {
-  margin: 0;
-  color: #1f2937;
-  font-size: 18px;
+
+.customer-info small {
+    display: block;
+
+    color: #9ca3af;
+
+    font-size: 10px;
+
+    margin-top: 1px;
 }
 
-.feedback-empty p {
-  max-width: 480px;
-  margin: 8px auto 0;
-  color: #6b7280;
-  font-size: 14px;
-  line-height: 1.6;
-}
 
-/* Loading */
+/* ============================================================
+   Loading
+   ============================================================ */
 
 .feedback-loading {
-  min-height: 350px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
+    min-height: 350px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #6b7280;
 }
+
 
 .feedback-loading p {
-  margin-top: 15px;
-  color: #6b7280;
-  font-size: 14px;
+    margin-top: 10px;
+
+    font-size: 12px;
 }
+
 
 .feedback-loading-spinner {
-  width: 34px;
-  height: 34px;
-  border: 3px solid #fed7aa;
-  border-top-color: #f97316;
-  border-radius: 50%;
-  animation: feedback-spin 0.8s linear infinite;
+    width: 28px;
+
+    height: 28px;
+
+    border: 3px solid #fed7aa;
+
+    border-top-color: #f97316;
+
+    border-radius: 50%;
+
+    animation: feedback-spin 0.8s linear infinite;
 }
+
 
 @keyframes feedback-spin {
-  to {
-    transform: rotate(360deg);
-  }
+
+    to {
+        transform: rotate(360deg);
+    }
+
 }
 
-/* Responsive */
 
-@media (max-width: 1000px) {
-  .feedback-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+/* ============================================================
+   Empty State
+   ============================================================ */
 
-@media (max-width: 760px) {
-  .feedback-page-header {
-    align-items: flex-start;
-  }
+.feedback-empty {
+    background: white;
 
-  .feedback-page-header h1 {
-    font-size: 26px;
-  }
+    border: 1px solid #e5e7eb;
 
-  .feedback-header-icon {
-    width: 52px;
-    height: 52px;
-  }
+    border-radius: 14px;
 
-  .feedback-grid {
-    grid-template-columns: 1fr;
-  }
-}
+    min-height: 300px;
 
-@media (max-width: 540px) {
-  .feedback-page-header {
+    display: flex;
+
     flex-direction: column;
-  }
 
-  .feedback-header-icon {
-    display: none;
-  }
+    align-items: center;
 
-  .feedback-page-header h1 {
-    font-size: 24px;
-  }
+    justify-content: center;
 
-  .feedback-stats {
-    grid-template-columns: 1fr;
-  }
+    text-align: center;
 
-  .feedback-stat-card {
-    padding: 17px;
-  }
+    padding: 30px;
 }
+
+
+.feedback-empty-icon {
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 12px;
+
+    background: #f9fafb;
+
+    color: #d1d5db;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.feedback-empty h3 {
+    margin: 12px 0 0;
+
+    color: #374151;
+
+    font-size: 15px;
+}
+
+
+.feedback-empty p {
+    max-width: 420px;
+
+    margin: 5px 0 0;
+
+    color: #9ca3af;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .feedback-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .feedback-page {
+        padding-bottom: 24px;
+    }
+
+
+    .feedback-header {
+        padding: 18px;
+
+        border-radius: 15px;
+    }
+
+
+    .feedback-header h1 {
+        font-size: 23px;
+    }
+
+
+    .feedback-header p {
+        font-size: 12px;
+    }
+
+
+    .feedback-header-icon {
+        width: 40px;
+
+        height: 40px;
+    }
+
+
+    .feedback-grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .feedback-stats {
+        grid-template-columns: 1fr;
+    }
+
+
+    .feedback-section-header {
+        align-items: flex-start;
+    }
+
+}
+
