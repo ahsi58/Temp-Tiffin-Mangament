@@ -5,6 +5,8 @@ from langchain.agents import create_agent
 from app.clients.gemini_client import chat_model
 from app.tools.menu_tool import get_today_menu, get_weekly_menu
 from app.tools.user_tool import create_user_tools
+from app.tools.order_tool import create_order_tools
+from app.tools.vendor_tool import create_vendor_tools
 from app.utils.response_parser import extract_text
 
 
@@ -24,12 +26,16 @@ class Chatbot:
 
         # Create tools specific to the logged-in user
         user_tools = create_user_tools(access_token)
+        order_tools = create_order_tools(access_token)
+        vendor_tools = create_vendor_tools(access_token)
 
         # Combine common tools with user-specific tools
         tools = [
             get_today_menu,
             get_weekly_menu,
-            *user_tools
+            *user_tools,
+            *order_tools,
+            *vendor_tools
         ]
 
         # Create agent for this request

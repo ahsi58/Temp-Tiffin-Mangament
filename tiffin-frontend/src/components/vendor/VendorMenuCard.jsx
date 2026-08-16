@@ -1,3 +1,11 @@
+import {
+    Utensils,
+    IndianRupee,
+    CheckCircle2,
+    XCircle,
+    Clock3,
+} from "lucide-react";
+
 import StatusBadge from "./StatusBadge";
 import ActionButtons from "./ActionButtons";
 
@@ -8,84 +16,236 @@ function VendorMenuCard({
     onToggle
 }) {
 
+    const isLunch = menu.mealType === "LUNCH";
+
     return (
 
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full">
+        <div className="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col h-full">
 
-            {/* Card Header */}
+            {/* ================================================= */}
+            {/* TOP ACCENT */}
+            {/* ================================================= */}
 
-            <div className="flex items-center justify-between px-6 pt-6">
+            <div
+                className={`h-1.5 ${
+                    isLunch
+                        ? "bg-orange-500"
+                        : "bg-indigo-500"
+                }`}
+            />
 
-                <h3 className="text-2xl font-semibold text-gray-900">
-                    {menu.mealType === "LUNCH" ? "Lunch" : "Dinner"}
-                </h3>
+            <div className="p-5 flex flex-col flex-grow">
 
-                <StatusBadge available={menu.available} />
+                {/* ================================================= */}
+                {/* HEADER */}
+                {/* ================================================= */}
 
-            </div>
+                <div className="flex items-start justify-between gap-4">
 
-            <hr className="mt-4 border-gray-200" />
+                    <div className="flex items-center gap-3">
 
-            {/* Body */}
+                        <div
+                            className={`w-11 h-11 rounded-xl flex items-center justify-center ${
+                                isLunch
+                                    ? "bg-orange-50 text-orange-500"
+                                    : "bg-indigo-50 text-indigo-500"
+                            }`}
+                        >
 
-            <div className="flex flex-col flex-grow px-6 py-5">
+                            <Utensils size={21} />
 
-                <h2 className="text-3xl font-bold text-gray-900">
-                    {menu.title}
-                </h2>
+                        </div>
+
+                        <div>
+
+                            <div className="flex items-center gap-2">
+
+                                <span
+                                    className={`text-xs font-bold uppercase tracking-wider ${
+                                        isLunch
+                                            ? "text-orange-500"
+                                            : "text-indigo-500"
+                                    }`}
+                                >
+                                    {isLunch
+                                        ? "Lunch"
+                                        : "Dinner"}
+                                </span>
+
+                                <span className="text-gray-300">
+                                    •
+                                </span>
+
+                                <span className="text-xs text-gray-400 flex items-center gap-1">
+                                    <Clock3 size={11} />
+                                    {isLunch
+                                        ? "Afternoon"
+                                        : "Evening"}
+                                </span>
+
+                            </div>
+
+                            <h3 className="text-xl font-bold text-gray-900 mt-1">
+                                {menu.title}
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    {/* Availability */}
+
+                    <StatusBadge
+                        available={menu.available}
+                    />
+
+                </div>
+
+
+                {/* ================================================= */}
+                {/* DESCRIPTION */}
+                {/* ================================================= */}
 
                 {menu.description && (
 
-                    <p className="mt-2 text-gray-500 leading-7 text-base">
-                        {menu.description}
-                    </p>
+                    <div className="mt-5">
+
+                        <p className="text-sm text-gray-600 leading-6 line-clamp-2">
+                            {menu.description}
+                        </p>
+
+                    </div>
 
                 )}
 
-                {/* Menu Items */}
 
-                <div className="mt-7">
+                {/* ================================================= */}
+                {/* MENU ITEMS */}
+                {/* ================================================= */}
 
-                    <h4 className="text-lg font-semibold text-gray-800 mb-3">
-                        Menu Items
-                    </h4>
+                <div className="mt-5">
 
-                    <ul className="space-y-2">
+                    <div className="flex items-center justify-between mb-3">
 
-                        {menu.items.map(item => (
+                        <div className="flex items-center gap-2">
 
-                            <li
+                            <Utensils
+                                size={15}
+                                className="text-gray-400"
+                            />
+
+                            <h4 className="text-sm font-semibold text-gray-800">
+                                Menu Items
+                            </h4>
+
+                        </div>
+
+                        <span className="text-xs text-gray-400">
+                            {menu.items?.length || 0} items
+                        </span>
+
+                    </div>
+
+
+                    <div className="flex flex-wrap gap-2">
+
+                        {menu.items?.map(item => (
+
+                            <span
                                 key={item.id}
-                                className="text-gray-700 text-base"
+                                className="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium text-gray-700"
                             >
-                                • {item.itemName}
-                            </li>
+                                {item.itemName}
+                            </span>
 
                         ))}
 
-                    </ul>
+                    </div>
 
                 </div>
 
-                {/* Price */}
 
-                <div className="mt-8 pt-5 border-t border-gray-200">
+                {/* ================================================= */}
+                {/* PRICE / STATUS SECTION */}
+                {/* ================================================= */}
 
-                    <p className="text-gray-500 font-medium">
-                        Price
-                    </p>
+                <div className="mt-6 pt-5 border-t border-gray-100">
 
-                    <p className="text-3xl font-bold text-gray-900 mt-1">
-                        ₹{menu.price}
-                    </p>
+                    <div className="flex items-end justify-between">
+
+                        {/* Price */}
+
+                        <div>
+
+                            <p className="text-xs text-gray-400 mb-1">
+                                Selling Price
+                            </p>
+
+                            <div className="flex items-center gap-1">
+
+                                <IndianRupee
+                                    size={18}
+                                    className={
+                                        isLunch
+                                            ? "text-orange-500"
+                                            : "text-indigo-500"
+                                    }
+                                />
+
+                                <span className="text-2xl font-bold text-gray-900">
+                                    {menu.price}
+                                </span>
+
+                                <span className="text-xs text-gray-400 ml-1">
+                                    / meal
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Availability Info */}
+
+                        <div
+                            className={`flex items-center gap-1.5 text-xs font-medium ${
+                                menu.available
+                                    ? "text-green-600"
+                                    : "text-red-500"
+                            }`}
+                        >
+
+                            {menu.available ? (
+
+                                <>
+                                    <CheckCircle2 size={15} />
+                                    Accepting Orders
+                                </>
+
+                            ) : (
+
+                                <>
+                                    <XCircle size={15} />
+                                    Orders Closed
+                                </>
+
+                            )}
+
+                        </div>
+
+                    </div>
 
                 </div>
 
             </div>
 
-            {/* Footer */}
 
-            <div className="px-6 pb-6">
+            {/* ================================================= */}
+            {/* ACTION FOOTER */}
+            {/* ================================================= */}
+
+            <div className="border-t border-gray-100 bg-gray-50/70 px-5 py-4">
 
                 <ActionButtons
                     menu={menu}
@@ -99,7 +259,6 @@ function VendorMenuCard({
         </div>
 
     );
-
 }
 
 export default VendorMenuCard;

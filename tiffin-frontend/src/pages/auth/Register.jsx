@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 // import { registerCustomer } from "../../api/authApi";
 import { register } from "../../api/authApi";
 import AuthLayout from "../../components/layout/AuthLayout";
+import toast from "react-hot-toast";
 import "./Register.css";
 
 function Register() {
@@ -97,13 +98,16 @@ function Register() {
 
         console.log(response.data);
 
-        alert("Registration Successful!");
+        toast.success("Registration successful!");
 
         navigate("/");
     } catch (error) {
         console.error(error);
 
-        alert("Registration Failed!");
+        toast.error(
+            error.response?.data?.message ||
+            "Registration failed. Please try again."
+        );
     }
 };
 
